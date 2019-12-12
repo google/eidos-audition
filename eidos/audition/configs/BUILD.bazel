@@ -1,0 +1,90 @@
+# Miscellaneous configurations and associated basic checks.
+#
+# Please note, the list of configurations in this directory is by no means
+# exhaustive.
+
+package(default_visibility = ["//eidos:__subpackages__"])
+
+load("//eidos/audition:auditory_feature_extractor_config.bzl", "config_tester")
+
+config_tester(name = "bm_baumgarte")
+
+config_tester(name = "bm_carfac")
+
+config_tester(name = "bm_gammatone-cooke-and-ma")
+
+config_tester(name = "bm_gammatone-slaney")
+
+config_tester(name = "hair_cell_baumgarte_bruce2018")
+
+config_tester(name = "hair_cell_baumgarte_meddis1986")
+
+config_tester(name = "hair_cell_baumgarte_sumner2002")
+
+config_tester(name = "hair_cell_gammatone-cooke-and-ma_bruce2018")
+
+config_tester(name = "hair_cell_gammatone-cooke-and-ma_meddis1986")
+
+config_tester(name = "hair_cell_gammatone-cooke-and-ma_sumner2002")
+
+config_tester(name = "hair_cell_gammatone-slaney_bruce2018")
+
+config_tester(name = "hair_cell_gammatone-slaney_meddis1986")
+
+config_tester(name = "hair_cell_gammatone-slaney_sumner2002")
+
+config_tester(name = "hair_cell_carfac")
+
+config_tester(name = "hair_cell_carfac_bruce2018")
+
+config_tester(name = "hair_cell_carfac_meddis1986")
+
+config_tester(name = "hair_cell_carfac_sumner2002")
+
+config_tester(name = "hair_cell_zilany2014")
+
+config_tester(name = "spikes_baumgarte_bruce2018_bruce2018")
+
+config_tester(name = "spikes_baumgarte_bruce2018_zhang2001")
+
+config_tester(name = "spikes_baumgarte_bruce2018_jackson")
+
+config_tester(name = "spikes_carfac_bruce2018_bruce2018")
+
+config_tester(name = "spikes_carfac_bruce2018_jackson")
+
+config_tester(name = "spikes_carfac_bruce2018_zhang2001")
+
+config_tester(name = "spikes_gammatone-cooke-and-ma_bruce2018_bruce2018")
+
+config_tester(name = "spikes_gammatone-cooke-and-ma_bruce2018_jackson")
+
+config_tester(name = "spikes_gammatone-cooke-and-ma_bruce2018_zhang2001")
+
+config_tester(name = "spikes_gammatone-slaney_bruce2018_bruce2018")
+
+config_tester(name = "spikes_gammatone-slaney_bruce2018_jackson")
+
+config_tester(name = "spikes_gammatone-slaney_bruce2018_zhang2001")
+
+# TODO(agutkin): Fix failing configuration.
+config_tester(
+    name = "spikes_zilany2014_bruce2018",
+    test_enabled = False,
+)
+
+# TODO(agutkin): Fix failing configuration (fails on Linux but not on MacOS X).
+config_tester(
+    name = "spikes_zilany2014_jackson",
+    test_enabled = False,
+)
+
+# TODO(agutkin): Fix failing configuration.
+config_tester(
+    name = "spikes_zilany2014_zhang2001",
+    test_enabled = False,
+)
+
+# Local Variables:
+# mode: python
+# End:

@@ -1,0 +1,34 @@
+# General test data.
+
+package(default_visibility = ["//eidos:__subpackages__"])
+
+genrule(
+    name = "nep_0258_0119737288_100kHz",
+    srcs = ["nep_0258_0119737288.wav"],
+    outs = ["nep_0258_0119737288_100kHz.wav"],
+    cmd = """
+       sox $< $@ rate 100000
+    """,
+)
+
+genrule(
+    name = "nep_letter_ma_100kHz",
+    srcs = ["nep_letter_ma.wav"],
+    outs = ["nep_letter_ma_100kHz.wav"],
+    cmd = """
+       sox $< $@ rate 100000
+    """,
+)
+
+filegroup(
+    name = "audio",
+    srcs = glob(["*.wav"]),
+    data = [
+        ":nep_0258_0119737288_100kHz",
+        ":nep_letter_ma_100kHz",
+    ],
+)
+
+# Local Variables:
+# mode: python
+# End:

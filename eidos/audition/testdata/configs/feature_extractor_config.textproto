@@ -1,0 +1,20 @@
+# Configuration for the feature extractor.
+
+config {
+    audio_scaling_gain: 0.095
+}
+
+pipeline {
+    models {
+        model_type: MODEL_GAMMATONE_SLANEY
+        stage_type: STAGE_BASILAR_MEMBRANE
+    }
+    models {
+        model_type: MODEL_MEDDIS_SYNAPSE_1986
+        stage_type: STAGE_HAIR_CELLS
+    }
+}
+
+# Local Variables:
+# mode: python
+# End:

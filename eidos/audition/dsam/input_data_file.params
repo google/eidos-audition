@@ -1,0 +1,3 @@
+FILENAME	../testdata/ne_np/nep_letter_ma.wav	Stimulus file name.
+SUB_FORMAT_TYPE	8					Sound file format sub-type.
+GAIN		100

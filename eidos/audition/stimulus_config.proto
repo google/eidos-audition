@@ -1,0 +1,72 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Model-agnostic parameters encapsulating information about the stimulus
+// and its requested analysis.
+
+syntax = "proto3";
+
+package eidos.audition;
+
+// Some of the parameters may be chosen to be ignored by the particular models.
+// For example, CARFAC uses its own adaptive computation of number of output
+// channels, hence ignoring the <num_channels> parameters in this message.
+//
+// Next available ID: 8
+message StimulusConfig {
+  // Input sampling rate.
+  int32 sample_rate = 1;
+
+  // Audio scaling gain. By default we scale the waveform to [-1.0,1.0] range.
+  // To these values we can also apply a gain factor.
+  //
+  // Note from Dick Lyon on CARFAC: "be aware that the -1 to 1 range, if used
+  // fully, represents very loud sound.  For "normal" level, you probably want
+  // to throw in a gain of 0.01 to 0.1 on top of the mapping from int16 to
+  // that range".
+  float audio_scaling_gain = 2;
+
+  // Downsample the output by sampling every <n> samples. Some implementations
+  // prefer this value over customizing the output sample rate.
+  int32 downsample_step = 3;
+
+  // Store outputs from the intermediate stages of processing. For example, if
+  // the pipeline consists of basilar membrane followed by a synaptic model,
+  // the outputs of both stages are stored.
+  bool store_intermediate_outputs = 4;
+
+  // Number of channels (frequency bands) for analysis corresponding to <n>
+  // equidistant locations along the cochlea. If unset, model-specific defaults
+  // will be used.
+  int32 num_channels = 5;
+
+  // For a basilar membrane, the characteristic frequency (CF) of a particular
+  // place along the membrane is the frequency that peaks at that point. For an
+  // auditory nerve fibre, it is the frequency at which least energy is needed
+  // to stimulate it. Different nerve fibers have different CFs. The CF of a
+  // fibre is roughly the same as the resonant frequency of the part of the
+  // basilar membrane that it is attached to.
+
+  // Lowest characteristic frequency (CF) for analysis (in Hz). If unset,
+  // model-specific defaults will be used.
+  float lowest_cf_hz = 6;
+
+  // Highest characteristic frequency (CF) for analysis (in Hz). If unset,
+  // model-specific defaults will be used.
+  float highest_cf_hz = 7;
+}
+
+// Local Variables:
+// mode: c++
+// End:

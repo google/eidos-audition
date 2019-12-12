@@ -1,0 +1,5 @@
+NUM_FIBRES	10000	Number of fibres.
+RAN_SEED	0	Random number seed (0 for different seed for each run).
+PULSE_DURATION	2e-04	Pulse duration (s).
+MAGNITUDE	1	Pulse magnitude (arbitrary units).
+REFRAC_PERIOD	0.00075	Refractory period (s).

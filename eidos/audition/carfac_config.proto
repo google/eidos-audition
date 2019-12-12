@@ -1,0 +1,104 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Configuration for the CARFAC model by Dick Lyon.
+//
+// See:
+//   Lyon, R. (2011): "Using a Cascade of Asymmetric Resonators with
+//   Fast-Acting Compression as a Cochlear Model for Machine-Hearing
+//   Applications", Autumn Meeting of the Acoustical Society of Japan (2011),
+//   pp. 509-512.
+
+syntax = "proto3";
+
+package eidos.audition;
+
+// This message consists of several sub-configurations that are parsed and
+// converted to the configuration structs required by the CARFAC API. This
+// is cumbersome and could be avoided if CARFAC implementation used protocol
+// buffers.
+//
+// Next available ID: 6
+message CarfacConfig {
+  // Parameters required to design the set of coefficients implementing
+  // 'The Cascade of Asymmetric Resonators' (CAR).
+  //
+  // Next available ID: 12
+  message CarParams {
+    double velocity_scale = 1;  // Used for the velocity nonlinearity.
+    double v_offset = 2;  // The offset gives us quadratic part.
+    double min_zeta = 3;  // The minimum damping factor in mid-freq channels.
+    double max_zeta = 4;  // The maximum damping factor in mid-freq channels.
+    double first_pole_theta = 5;
+    double zero_ratio = 6;  // This is how far zero is above the pole.
+    double high_f_damping_compression = 7;  // A range from 0 to 1 to compress
+                                            // theta.
+    double erb_per_step = 8;
+    double min_pole_hz = 9;
+    double erb_break_freq = 10;
+    double erb_q = 11;
+  }
+
+  // Inner hair cell (IHC) parameters, which are used to design the IHC filters.
+  //
+  // Next available ID: 9
+  message IhcParams {
+    bool just_half_wave_rectify = 1;
+    bool one_capacitor = 2;
+    double tau_lpf = 3;
+    double tau1_out = 4;
+    double tau1_in = 5;
+    double tau2_out = 6;
+    double tau2_in = 7;
+    double ac_corner_hz = 8;
+  }
+
+  // Automatic gain control (AGC) parameters for designing AGC filters.
+  //
+  // Next available ID: 5
+  message AgcParams {
+    int32 num_stages = 1;  // If zero, the AGC is disabled.
+    double agc_stage_gain = 2;
+    double agc_mix_coeff = 3;
+    repeated double time_constants = 4;
+    repeated int32 decimation = 5;
+    repeated double agc1_scales = 6;
+    repeated double agc2_scales = 7;
+  }
+
+  // Message with the flags indicating which signals to store.
+  //
+  // Next available ID: 5
+  message OutputTypes {
+    bool store_nap = 1;  // Store Neural Activity Patterns (NAP).
+    bool store_bm = 2;   // Store Basilar Membrane (BM) displacements.
+    bool store_ohc = 3;  // Store Outer Hair Cells (OHCs) signals.
+    bool store_agc = 4;  // Store Adaptive Gain Control (AGC).
+  }
+
+  CarParams car = 1;             // The Cascade of Asymmetric Resonators (CAR).
+  IhcParams ihc = 2;             // Inner Hair Cell (IHC) filter params.
+  AgcParams agc = 3;             // Automatic Gain Control (AGC) parameters.
+  OutputTypes output_types = 4;  // Signal types to save.
+
+  // Enabling <agc_open_loop> breaks the AGC feedback loop, making the filters
+  // linear; false is the normal value, using feedback from the output level to
+  // control filter damping, thereby giving a compressive amplitude
+  // characteristic to reduce the output dynamic range.
+  bool agc_open_loop = 5;
+}
+
+// Local Variables:
+// mode: c++
+// End:

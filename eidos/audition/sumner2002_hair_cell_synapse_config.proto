@@ -1,0 +1,72 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Configuration parameters for Sumner, et. al. (2002) synapse model.
+
+syntax = "proto3";
+
+package eidos.audition;
+
+// Calcium conductance mode as defined in DSAM.
+//
+// Next available ID: 2
+enum Sumner2002CaCondMode {
+  SUMNER2002_CA_COND_MODE_ORIGINAL = 0;  // As defined in the paper.
+  SUMNER2002_CA_COND_MODE_REVISED = 1;
+}
+
+// Cleft replenishment mode as defined in DSAM.
+//
+// Next available ID: 2
+enum Sumner2002CleftReplenishMode {
+  SUMNER2002_CLEFT_REPLENISH_MODE_ORIGINAL = 0;  // As defined in the paper.
+  SUMNER2002_CLEFT_REPLENISH_MODE_UNITY = 1;
+}
+
+// Next available ID: 7
+message Sumner2002HairCellSynapseConfig {
+  // Calcium conductance mode.
+  Sumner2002CaCondMode ca_cond_mode = 1;
+
+  // Cleft replenishment mode.
+  Sumner2002CleftReplenishMode cleft_replenish_mode = 2;
+
+  // If enabled, outputs spike rates, otherwise outputs probabilities.
+  bool output_spikes = 3;
+
+  // -------------------------------------------------------------------------
+  // Following parameters (4 to 6) are fiber-specific, the values specified in
+  // Table II (p. 2183) of the Sumner, et. al. (2002) paper.
+  //
+  //                           HSR       MSR
+  //          g_ca_max:     8.0e-9    4.5e-9
+  //         perm_ca_0:   4.48e-11   3.2e-11
+  //   max_free_pool_m:         10        10
+  //
+  // If unset, the defaults for HSR fiber population are used.
+  // -------------------------------------------------------------------------
+
+  // Maximum calcium conductance (in Siemens units).
+  double g_ca_max = 4;
+
+  // Calcium threshold concentration.
+  double perm_ca_0 = 5;
+
+  // Maximum number of transmitter packets (quanta) in free pool.
+  int32 max_free_pool_m = 6;
+}
+
+// Local Variables:
+// mode: c++
+// End:

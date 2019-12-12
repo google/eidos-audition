@@ -1,0 +1,9 @@
+Adaptation of the spike generator from the Auditory Nerve model described in:
+
+X. Zhang, M. G. Heinz, I. C. Bruce, and L. H. Carney, A
+phenomenological model for the responses of auditory-nerve fibers:
+I. Nonlinear tuning with compression and
+suppression. J. Acoust. Soc. Am. 2001, 109:648-670.
+
+The original code is available from:
+https://www.urmc.rochester.edu/MediaLibraries/URMCMedia/labs/carney-lab/codes/ZhangCarney-ANcode-2001-tar.gz

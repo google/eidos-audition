@@ -1,0 +1,186 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Configuration for an auditory model.
+
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package eidos.audition;
+
+// Auditory models currently supported.
+//
+// Next available ID: 12
+enum AuditoryModelType {
+  // Placeholder for an unknown (unitialized) model.
+  MODEL_UNKNOWN = 0;
+
+  // Mock basical membrane model.
+  MODEL_MOCK_BASILAR_MEMBRANE = 1;
+
+  // Cascade of Asymmetric Resonators with Fast-Acting Compression (CARFAC).
+  //
+  // See Richard F. Lyon, "Using a Cascade of Asymmetric Resonators with
+  // Fast-Acting Compression as a Cochlear Model for Machine-Hearing
+  // Applications", Autumn Meeting of the Acoustical Society of Japan (2011),
+  // pp. 509--512.
+  MODEL_CARFAC = 2;
+
+  // Peripheral ear model by Frank Baumgarte.
+  //
+  // See F. Baumgarte: "Ein psychophysiologisches Gehoermodell zur Nachbildung
+  // von Wahrnehmungsschwellen fuer die Audiocodierung", PhD Dissertation,
+  // University of Hannover, 2000.
+  MODEL_BAUMGARTE = 3;
+
+  // Peripheral model up to and including the hair cell by Zilany, et. al.
+  // based on:
+  //
+  // Zilany, M.S.A., Bruce, I.C., and Carney, L.H. (2014). "Updated parameters
+  //    and expanded simulation options for a model of the auditory periphery,"
+  //    Journal of the Acoustical Society of America.
+  //
+  // Zilany, M.S.A., Bruce, I.C., Nelson, P.C., and Carney, L.H. (2009). "A
+  //    phenomenological model of the synapse between the inner hair cell and
+  //    auditory nerve: Long-term adaptation with power-law dynamics," Journal
+  //    of the Acoustical Society of America, 126(5): 2390-2412.
+  MODEL_ZILANY_IHC_2014 = 4;
+
+  // Gammatone filterbank model. Two implementations are available:
+  //   1. M. Slaney (1998): "Auditory Toolbox Version
+  //      2", Technical Report #1998-010, Interval Research Corporation, 1998;
+  //   2. Ning Ma's implementation of: M. Cooke (1993): "Modelling Auditory
+  //      Processing and Organisation", Cambridge University Press, Series
+  //      "Distinguished Dissertations in Computer Science", August.
+  // One can select either implementation via model-specific configuration.
+  MODEL_GAMMATONE_SLANEY = 5;
+
+  // Inner hair cell synapse model by Ray Meddis, et. al.:
+  //   - Ray Meddis (1986): "Simulation of mechanical to neural transduction in
+  //   the auditory receptor", Journal of the Acoustical Society of America
+  //   79(3), 702--711.
+  //   - Ray Meddis, Michael J. Hewitt, and Trevor M. Shackleton (1990):
+  //   "Implementation details of a computation model of the inner hair‐cell
+  //   auditory‐nerve synapse", The Journal of the Acoustical Society of America
+  //   87, 1813.
+  MODEL_MEDDIS_SYNAPSE_1986 = 6;
+
+  // Inner hair cell synaptic model from Carney, Bruce and Zilany labs:
+  //   Bruce, I.C., Erfani, Y., and Zilany, M.S.A. (2018). "A Phenomenological
+  //   model of the synapse between the inner hair cell and auditory nerve:
+  //   Implications of limited neurotransmitter release sites", Hearing research,
+  //   360, 40--54, (Special Issue on "Computational Models in Hearing").
+  MODEL_BRUCE_SYNAPSE_2018 = 7;
+
+  // Synapse spike generator model from Carney, Bruce and Zilany labs:
+  //   Bruce, I.C., Erfani, Y., and Zilany, M.S.A. (2018). "A Phenomenological
+  //   model of the synapse between the inner hair cell and auditory nerve:
+  //   Implications of limited neurotransmitter release sites", Hearing research,
+  //   360, 40--54, (Special Issue on "Computational Models in Hearing").
+  MODEL_BRUCE_SPIKES_2018 = 8;
+
+  // Synapse spike generator model from Scott Jackson:
+  //   Jackson BS, Carney LH (2005), "The spontaneous-rate histogram of the
+  //    auditory nerve can be explained by only two or three spontaneous rates
+  //    and long-range dependence", J. Assoc. Res. Otolaryngol. 6:148-159.
+  MODEL_JACKSON_SPIKES = 9;
+
+  // Synapse spike generator model from Zhang, et. al:
+  //   Zhang, X., Heinz, M. G., Bruce, I. C., & Carney, L. H. (2001): "A
+  //    phenomenological model for the responses of auditory-nerve fibers: I.
+  //    Nonlinear tuning with compression and suppression.", The Journal of the
+  //    Acoustical Society of America, 109(2), 648-670.
+  MODEL_ZHANG_SPIKES_2001 = 10;
+
+  // Inner hair cell synapse model by Sumner, et. al.:
+  //   Sumner, C. J, Lopez-Poveda, E. A., O'Mard, L. P. and Meddis, R. (2002):
+  //    "A revised model of the inner-hair cell and auditory-nerve complex.",
+  //    The Journal of the Acoustical Society of America (JASA), vol.111, no.5,
+  //    pp. 2178--2188.
+  MODEL_SUMNER_SYNAPSE_2002 = 11;
+}
+
+// "The auditory system transforms sound waves into distinct patterns of neural
+// activity, which are then integrated with information from other sensory
+// systems to guide behavior, including orienting movements to acoustical
+// stimuli and intraspecies communication. The first stage of this
+// transformation occurs at the external and middle ears, which collect sound
+// waves and amplify their pressure, so that the sound energy in the air can be
+// successfully transmitted to the fluid-filled cochlea of the inner ear. In
+// the inner ear, a series of biomechanical processes occur that break up the
+// signal into simpler, sinusoidal components, with the result that the
+// frequency, amplitude, and phase of the original signal are all faithfully
+// transduced by the sensory hair cells and encoded by the electrical activity
+// of the auditory nerve fibers. One product of this process of acoustical
+// decomposition is the systematic representation of sound frequency along the
+// length of the cochlea, referred to as tonotopy."
+//                            From "Neuroscience", Dale Purves, et. al. (2011).
+//
+// The following message defines several stages in this processing pipeline. A
+// model may implement one or more of these stages.
+//
+// Next available ID: 4
+enum AuditoryStageType {
+  // Placeholder for an unknown auditory stage.
+  STAGE_UNKNOWN = 0;
+
+  // Basilar membrane.
+  STAGE_BASILAR_MEMBRANE = 1;
+
+  // Hair cells: inner (afferent) and outer (efferent) hair cells.
+  STAGE_HAIR_CELLS = 2;
+
+  // Auditory nerve (AN) synapse.
+  STAGE_AUDITORY_NERVE_SYNAPSE = 3;
+}
+
+// Types of outputs the model can produce.
+//
+// Next available ID: 5
+enum AuditoryOutputType {
+  // Placeholder for an unknown output.
+  OUTPUT_UNKNOWN = 0;
+
+  // Displacement of a basilar membrane in response to the pressure stimuli.
+  // This forms an excitation for the inner hair cells.
+  OUTPUT_BASILAR_MEMBRANE_DISPLACEMENT = 1;
+
+  // Transmembrane potential across inner hair cells (afferents).
+  OUTPUT_IHC_TRANSMEMBRANE_POTENTIAL = 2;
+
+  // Auditory nerve synapse: Firing rate probabilities.
+  OUTPUT_SYNAPSE_FIRING_RATES = 3;
+
+  // Auditory nerve synapse: Spoke onset times.
+  OUTPUT_SYNAPSE_SPIKE_TIMES = 4;
+}
+
+// Model configuration.
+//
+// Next available ID: 4
+message AuditoryModelConfig {
+  // Model type.
+  AuditoryModelType model_type = 1;
+
+  // Model stage type.
+  AuditoryStageType stage_type = 2;
+
+  // Concrete model configuration.
+  google.protobuf.Any config = 3;
+};
+
+// Local Variables:
+// mode: c++
+// End:

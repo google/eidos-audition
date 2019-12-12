@@ -1,0 +1,69 @@
+# Miscellaneous dependency tests.
+
+package(default_visibility = ["//eidos:__subpackages__"])
+
+alias(
+    name = "gtest_main",
+    actual = "@com_google_googletest//:gtest_main",
+)
+
+cc_test(
+    name = "boost_test",
+    srcs = ["boost_test.cc"],
+    deps = [
+        ":gtest_main",
+        "@io_absl_cpp//absl/strings",
+        "@org_boost//:graph",
+        "@org_boost//:regex",
+    ],
+)
+
+cc_test(
+    name = "eigen_test",
+    srcs = ["eigen_test.cc"],
+    deps = [
+        ":gtest_main",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_test(
+    name = "carfac_test",
+    srcs = ["carfac_test.cc"],
+    includes = ["cpp"],
+    deps = [
+        ":gtest_main",
+        "@com_google_carfac//:carfac",
+    ],
+)
+
+cc_test(
+    name = "wave_test",
+    srcs = ["wave_test.cc"],
+    data = ["testdata/Untitled3.wav"],
+    deps = [
+        ":gtest_main",
+        "@com_github_wave//:wave",
+        "@io_absl_cpp//absl/strings",
+    ],
+)
+
+cc_test(
+    name = "resample_test",
+    srcs = ["resample_test.cc"],
+    deps = [
+        ":gtest_main",
+        "@com_github_resample//:resample",
+    ],
+)
+
+load(
+    "@com_google_eidos_audition//build:libsamplerate.bzl",
+    "libsamplerate_library",
+)
+
+libsamplerate_library()
+
+# Local Variables:
+# mode: python
+# End:

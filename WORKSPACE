@@ -1,0 +1,195 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Bazel (http://bazel.io/) WORKSPACE file for Eidos.
+
+workspace(name = "com_google_eidos_audition")
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# -----
+# ZLib:
+# -----
+
+http_archive(
+    name = "net_zlib",
+    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
+    strip_prefix = "zlib-1.2.11",
+    urls = ["https://zlib.net/zlib-1.2.11.tar.gz"],
+)
+
+# --------
+# Protobuf
+# --------
+
+# Dependencies.
+http_archive(
+    name = "bazel_skylib",
+    strip_prefix = "bazel-skylib-master",
+    urls = ["https://github.com/bazelbuild/bazel-skylib/archive/master.zip"],
+)
+
+# Protocol buffer library itself.
+protobuf_version = "3.9.0"
+
+protobuf_sha256 = "2ee9dcec820352671eb83e081295ba43f7a4157181dad549024d7070d079cf65"
+
+# proto_library and related rules implicitly depend on @com_google_protobuf.
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = protobuf_sha256,
+    strip_prefix = "protobuf-%s" % protobuf_version,
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v%s.tar.gz" %
+            protobuf_version],
+)
+
+# Import external protobuf dependencies into this workspace.
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+# --------------------------------
+# GoogleTest/GoogleMock framework.
+# --------------------------------
+
+googletest_version = "1.10.0"
+
+http_archive(
+    name = "com_google_googletest",
+    urls = ["https://github.com/abseil/googletest/archive/release-%s.zip" %
+            googletest_version],
+    sha256 = "94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91",
+    strip_prefix = "googletest-release-%s" % googletest_version,
+)
+
+# ------------------------------------
+# Google Abseil - C++ Common Libraries
+# ------------------------------------
+
+# Since at the moment the releases are very infrequent, we pull the HEAD of
+# master branch. Also, "sha256" doesn't seem to work at the moment.
+git_repository(
+    name = "io_absl_cpp",
+    commit = "078b89b3c046d230ef3ad39494e5852184eb528b",  # 24th October, 2019.
+    remote = "https://github.com/abseil/abseil-cpp.git",
+)
+
+# ---------------------------------------
+# Google Abseil - Python Common Libraries
+# ---------------------------------------
+
+http_archive(
+    name = "io_abseil_py",
+    strip_prefix = "abseil-py-master",
+    urls = ["https://github.com/abseil/abseil-py/archive/master.zip"],
+)
+
+# -----
+# Boost
+# -----
+
+boost_version = "1_71_0"
+
+boost_sha256 = "d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee"
+
+http_archive(
+    name = "org_boost",
+    build_file = "@//build:boost.BUILD",
+    sha256 = boost_sha256,
+    strip_prefix = "boost_%s" % boost_version,
+    url = ("https://dl.bintray.com/boostorg/release/1.71.0/source/boost_%s.tar.bz2" %
+           boost_version),
+)
+
+# -----
+# Eigen
+# -----
+
+eigen_version = "3.3.7"
+
+eigen_sha256 = "a8d87c8df67b0404e97bcef37faf3b140ba467bc060e2b883192165b319cea8d"
+
+http_archive(
+    name = "com_github_eigen",
+    build_file = "@//build:eigen.BUILD",
+    sha256 = eigen_sha256,
+    strip_prefix = "eigen-git-mirror-%s" % eigen_version,
+    url = ("https://github.com/eigenteam/eigen-git-mirror/archive/%s.tar.gz" %
+           eigen_version),
+)
+
+# -------------------------------------------------------------------------
+# wave: Simple C++ library for reading and writting wave files
+# -------------------------------------------------------------------------
+
+wave_version = "0.8.2a"
+
+http_archive(
+    name = "com_github_wave",
+    build_file = "@//build:wave.BUILD",
+    urls = ["https://github.com/audionamix/wave/archive/v%s.tar.gz" % wave_version],
+    sha256 = "371f49bed7599323579ad95829510e1cfbdefe934547025598b22a8b5010fcb4",
+    strip_prefix = "wave-%s/src" % wave_version,
+)
+
+# -------------------------------------------------------------------------
+# CAR-FAC (cascade of asymmetric resonators with fast-acting compression).
+# -------------------------------------------------------------------------
+
+new_git_repository(
+    name = "com_google_carfac",
+    build_file = "@//build:carfac.BUILD",
+    commit = "e70ad6107961bfd68defe60fa258beeed4e9b65d",
+    remote = "https://github.com/google/carfac.git",
+)
+
+# -------------------------------------------------------------------------
+# cnpy: library to read/write .npy and .npz files in C/C++
+# -------------------------------------------------------------------------
+
+new_git_repository(
+    name = "com_github_cnpy",
+    build_file = "@//build:cnpy.BUILD",
+    commit = "4e8810b1a8637695171ed346ce68f6984e585ef4",
+    remote = "https://github.com/rogersce/cnpy.git",
+)
+
+# -------------------------------------------------------------------------
+# Six is a Python 2 and 3 compatibility library.
+# -------------------------------------------------------------------------
+
+http_archive(
+    name = "six_archive",
+    build_file = "@//build:six.BUILD",
+    sha256 = "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
+    strip_prefix = "six-1.11.0",
+    urls = ["https://pypi.python.org/packages/16/d8/bc6316cf98419719bd59c91742194c111b6f2e85abac88e496adefaf7afe/six-1.11.0.tar.gz#md5=d12789f9baf7e9fb2524c0c64f1773f8"],
+)
+
+# -------------------------------------------------------------------------
+# Polyphase resampler library (C++ implementation of Matlab's resample).
+# -------------------------------------------------------------------------
+
+new_git_repository(
+    name = "com_github_resample",
+    build_file = "@//build:resample.BUILD",
+    commit = "9b43aba322bbfe77d5a9b5ca4adb8aa195c3c0fb",
+    remote = "https://github.com/terrygta/SignalResampler.git",
+)
+
+# Local Variables:
+# mode: python
+# End:

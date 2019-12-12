@@ -1,0 +1,107 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Collection of models dervived from the implementations developed or
+# derived from the original implementations by Bruce and Carney labs.
+
+package(default_visibility = ["//eidos/audition:__subpackages__"])
+
+cc_library(
+    name = "fractional_gaussian_noise",
+    srcs = ["fractional_gaussian_noise.cc"],
+    hdrs = ["fractional_gaussian_noise.h"],
+    deps = [
+        "//eidos/audition:utils",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_library(
+    name = "bruce2018_hair_cell_synapse_model",
+    srcs = ["bruce2018_hair_cell_synapse_model.cc"],
+    hdrs = ["bruce2018_hair_cell_synapse_model.h"],
+    deps = [
+        ":fractional_gaussian_noise",
+        "//eidos/audition:auditory_model",
+        "//eidos/audition:auditory_model_config_cc_proto",
+        "//eidos/audition:stimulus_config_cc_proto",
+        "//eidos/stubs:integral_types",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+        "@com_github_resample//:resample",
+    ],
+)
+
+cc_library(
+    name = "bruce2018_spike_generator",
+    srcs = ["bruce2018_spike_generator.cc"],
+    hdrs = ["bruce2018_spike_generator.h"],
+    deps = [
+        "//eidos/audition:auditory_model",
+        "//eidos/audition:auditory_model_config_cc_proto",
+        "//eidos/audition:stimulus_config_cc_proto",
+        "//eidos/audition:utils",
+        "//eidos/stubs:integral_types",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_library(
+    name = "jackson_spike_generator",
+    srcs = ["jackson_spike_generator.cc"],
+    hdrs = ["jackson_spike_generator.h"],
+    deps = [
+        "//eidos/audition:auditory_model",
+        "//eidos/audition:auditory_model_config_cc_proto",
+        "//eidos/audition:stimulus_config_cc_proto",
+        "//eidos/stubs:integral_types",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_library(
+    name = "zhang2001_spike_generator",
+    srcs = ["zhang2001_spike_generator.cc"],
+    hdrs = ["zhang2001_spike_generator.h"],
+    deps = [
+        "//eidos/audition:auditory_model",
+        "//eidos/audition:auditory_model_config_cc_proto",
+        "//eidos/audition:stimulus_config_cc_proto",
+        "//eidos/audition:zhang2001_spike_generator_config_cc_proto",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_library(
+    name = "zilany2014_ihc_model",
+    srcs = ["zilany2014_ihc_model.cc"],
+    hdrs = ["zilany2014_ihc_model.h"],
+    deps = [
+        "//eidos/audition:auditory_model",
+        "//eidos/audition:auditory_model_config_cc_proto",
+        "//eidos/audition:psychoacoustic_scale_utils",
+        "//eidos/audition:stimulus_config_cc_proto",
+        "//eidos/stubs:integral_types",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+# Local Variables:
+# mode: python
+# End:
