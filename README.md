@@ -1,5 +1,7 @@
 ## About
 
+[![Build Status](https://travis-ci.org/google/eidos-audition.svg?branch=master)](https://travis-ci.org/google/eidos-audition)
+
 This library represents a simple pipeline integrating various models
 of auditory periphery developed over the years in academia. The pipeline
 can be used to combine models representing various stages of auditory
