@@ -10,7 +10,7 @@ addons:
       - pkg-config
       - g++-7
       - sox
-      - python-pip3
+      - python3-pip
 
 before_install:
   - wget https://github.com/bazelbuild/bazel/releases/download/1.2.1/bazel_1.2.1-linux-x86_64.deb
