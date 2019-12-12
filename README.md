@@ -10,6 +10,4 @@ Detailed documentation for the auditory library can be found
 
 ## Disclaimer
 
-*** aside
 This is not an officially supported Google product.
-***
