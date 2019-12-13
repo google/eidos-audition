@@ -163,7 +163,7 @@ enum AuditoryOutputType {
   // Auditory nerve synapse: Firing rate probabilities.
   OUTPUT_SYNAPSE_FIRING_RATES = 3;
 
-  // Auditory nerve synapse: Spoke onset times.
+  // Auditory nerve synapse: Spike onset times.
   OUTPUT_SYNAPSE_SPIKE_TIMES = 4;
 }
 
