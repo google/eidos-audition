@@ -203,7 +203,7 @@ int SpikeGenerator(const std::vector<double> &rates, double sample_period,
       }
     }
 
-    // Decay the adapative mean redocking time towards the resting value if no
+    // Decay the adaptive mean redocking time towards the resting value if no
     // redocking events occurred in this time step.
     if (t_rd_decay && rd_first) {
       current_redocking_period =
