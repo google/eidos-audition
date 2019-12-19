@@ -69,7 +69,12 @@ flags.DEFINE_integer(
 
 flags.DEFINE_string(
     "output_image_file", None,
-    "If specified, will output the PNG image to a file.")
+    "If specified, will output the image to a file. The format is determined "
+    "by the file extension (PDF/PNG etc.).")
+
+flags.DEFINE_integer(
+    "figure_dpi", None,
+    "Figure resolution in dots per inch when saving to file.")
 
 FLAGS = flags.FLAGS
 
@@ -251,7 +256,7 @@ def main(unused_argv):
   plt.tight_layout()  # Makes sure the title doesn't overlap with x-axis ticks.
   if FLAGS.output_image_file:
     logging.info("Saving image to %s ...", FLAGS.output_image_file)
-    fig.savefig(FLAGS.output_image_file)
+    fig.savefig(FLAGS.output_image_file, dpi=FLAGS.figure_dpi)
   else:
     plt.show(block=True)
 
