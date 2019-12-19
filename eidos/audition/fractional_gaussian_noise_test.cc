@@ -32,7 +32,7 @@ namespace audition {
 TEST(FractionalGaussianNoiseTest, JacksonWhiteGaussianNoise) {
   // Check a case of pure white Gaussian noise.
   constexpr int kOutputLength = 100000;
-  constexpr double kEpsilon = 1E-1;
+  constexpr double kEpsilon = 2E-1;
   Eigen::VectorXd output = JacksonFractionalGaussianNoise(
       kOutputLength, 0.5 /* Hurst index */,
       0.0 /* mean */, 1.0 /* standard deviation */);
