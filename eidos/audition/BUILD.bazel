@@ -96,6 +96,26 @@ cc_test(
     ],
 )
 
+cc_library(
+    name = "windowing",
+    srcs = ["windowing.cc"],
+    hdrs = ["windowing.h"],
+    visibility = ["//visibility:private"],
+    deps = [
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+    ],
+)
+
+cc_test(
+    name = "windowing_test",
+    srcs = ["windowing_test.cc"],
+    deps = [
+        ":windowing",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 proto_library(
     name = "auditory_model_config_proto",
     srcs = ["auditory_model_config.proto"],
