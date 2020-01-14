@@ -44,12 +44,20 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
 // Runs windowing function over a two-dimensional input signal with dimensions
 // (num_channels, num_samples). Returns a vector of <num_frames> two-dimensional
 // arrays with dimension (num_channels, frame_size). The window width (in
-// seconds) is provided by <window_duration>. The window is advanced in steps
-// specified by <frame_shift_sec>, specified in seconds.
+// seconds) is provided by <window_duration_sec>. The window is advanced in
+// steps specified by <frame_shift_sec>, specified in seconds.
 std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
                                     int sample_rate,
-                                    double window_duration,
+                                    double window_duration_sec,
                                     double frame_shift_sec);
+
+// Same as above, but also integrates across time dimension in each window by
+// computing RMS for each channel. Returns an array with dimensions
+// (num_channels, num_frames).
+Eigen::ArrayXXd WindowAndIntegrateTime(const Eigen::ArrayXXd &input,
+                                       int sample_rate,
+                                       double window_duration_sec,
+                                       double frame_shift_sec);
 
 }  // namespace audition
 }  // namespace eidos

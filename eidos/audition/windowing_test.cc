@@ -30,7 +30,7 @@ constexpr double kWindowWidth = 25E-3;  // 25 ms.
 constexpr int kNumExtraSamples = 3000;
 constexpr int kNumExtraStep = 33;
 
-TEST(WindowingTest, BasicCheck) {
+TEST(WindowingTest, BasicCheckForFrames) {
   for (int i = 0; i < kNumExtraSamples; i += kNumExtraStep) {
     const int num_samples = kNumSamples + i;
     const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(
@@ -48,6 +48,18 @@ TEST(WindowingTest, BasicCheck) {
       EXPECT_EQ(frames[j].cols(), info.frame_size);
     }
   }
+}
+
+TEST(WindowingTest, BasicTimeIntegration) {
+  const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(
+      kNumChannels, kNumSamples);
+  const FrameInfo &info = GetFrameInfo(input, kSampleRate, kWindowWidth,
+                                       kFrameShift);
+  EXPECT_GT(info.num_frames, 0);
+  const Eigen::ArrayXXd frames = WindowAndIntegrateTime(
+      input, kSampleRate, kWindowWidth, kFrameShift);
+  EXPECT_EQ(frames.cols(), info.num_frames);
+  EXPECT_EQ(frames.rows(), input.rows());
 }
 
 }  // namespace audition

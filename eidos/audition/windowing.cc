@@ -14,6 +14,8 @@
 
 #include "eidos/audition/windowing.h"
 
+#include <cmath>
+
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -34,11 +36,11 @@ int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
 
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
                        int sample_rate,
-                       double window_duration,
+                       double window_duration_sec,
                        double frame_shift_sec) {
   FrameInfo info;
   const double sample_period = 1.0 / sample_rate;  // In seconds.
-  info.frame_size = static_cast<int>(window_duration / sample_period);
+  info.frame_size = static_cast<int>(window_duration_sec / sample_period);
   info.frame_shift = static_cast<int>(frame_shift_sec / sample_period);
   info.num_frames = NumFramesInWave(input.cols(), /* cur_offset */0,
                                     info.frame_size, info.frame_shift);
@@ -47,9 +49,9 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
 
 std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
                                     int sample_rate,
-                                    double window_duration,
+                                    double window_duration_sec,
                                     double frame_shift_sec) {
-  const FrameInfo &info = GetFrameInfo(input, sample_rate, window_duration,
+  const FrameInfo &info = GetFrameInfo(input, sample_rate, window_duration_sec,
                                        frame_shift_sec);
   GOOGLE_CHECK_GT(info.num_frames, 0)
       << "Invalid number of frames: " << info.num_frames;
@@ -69,6 +71,33 @@ std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
       output[i] = input.block(0, cur_offset, num_channels, cur_frame_size);
     }
     cur_offset += info.frame_shift;
+  }
+  return output;
+}
+
+Eigen::ArrayXXd WindowAndIntegrateTime(const Eigen::ArrayXXd &input,
+                                       int sample_rate,
+                                       double window_duration_sec,
+                                       double frame_shift_sec) {
+  const std::vector<Eigen::ArrayXXd> &frames = Window(
+      input, sample_rate, window_duration_sec, frame_shift_sec);
+  const int num_frames = frames.size();
+  GOOGLE_CHECK_GT(num_frames, 0) << "Invalid number of frames: " << num_frames;
+  const int frame_size = frames[0].cols();
+  GOOGLE_CHECK_GT(frame_size, 0) << "Invalid frame size: " << frame_size;
+  const int num_channels = frames[0].rows();
+  Eigen::ArrayXXd output = Eigen::ArrayXXd(num_channels, num_frames);
+  // TODO(agutkin): Row-wise norm (frames[i].rowwise().norm()) does not seem to
+  // compile at the moment. Resorting to brute-force logic.
+  for (int i = 0; i < num_frames; ++i) {
+    const Eigen::ArrayXXd &frame = frames[i];
+    for (int j = 0; j < num_channels; ++j) {
+      double sum = 0.0;
+      for (int k = 0; k < frame_size; ++k) {
+        sum += (frame(j, k) * frame(j, k));
+      }
+      output(j, i) = std::sqrt(sum);
+    }
   }
   return output;
 }
