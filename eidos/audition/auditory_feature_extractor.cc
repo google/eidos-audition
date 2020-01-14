@@ -19,6 +19,7 @@
 #include "eidos/audition/auditory_pipeline.h"
 #include "eidos/audition/stimulus_config.pb.h"
 #include "eidos/audition/waveform_utils.h"
+#include "eidos/audition/windowing.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -63,6 +64,16 @@ bool AuditoryFeatureExtractor::ComputeFeatures(
   GOOGLE_LOG(INFO) << "Generated " << last_output.size() << " values "
                    << "[frequency channels: " << last_output.rows()
                    << ", samples: " << last_output.cols() << "].";
+
+  // Apply windowing if necessary.
+  if (stimulus_config.apply_window_to_outputs()) {
+    for (auto &output : *response->mutable_outputs()) {
+      Eigen::ArrayXXd output_frames = WindowAndIntegrateTime(
+          output.second, stimulus_config);
+      output.second.swap(output_frames);
+    }
+    GOOGLE_LOG(INFO) << "Generated " << last_output.cols() << " frames.";
+  }
   return true;
 }
 

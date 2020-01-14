@@ -228,7 +228,7 @@ void AuditoryPipeline::Process(const StimulusConfig &stimulus_config,
     GOOGLE_LOG(INFO) << num_rearranged << " outputs rearranged.";
   } else {
     GOOGLE_CHECK(std::is_sorted(center_frequencies.begin(),
-                                 center_frequencies.end()))
+                                center_frequencies.end()))
         << "The center frequencies are unordered!";
   }
   *response->mutable_channel_properties() = channel_properties;

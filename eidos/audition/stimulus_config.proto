@@ -23,7 +23,7 @@ package eidos.audition;
 // For example, CARFAC uses its own adaptive computation of number of output
 // channels, hence ignoring the <num_channels> parameters in this message.
 //
-// Next available ID: 10
+// Next available ID: 11
 message StimulusConfig {
   // Input sampling rate.
   int32 sample_rate = 1;
@@ -66,12 +66,17 @@ message StimulusConfig {
   // model-specific defaults will be used.
   float highest_cf_hz = 7;
 
+  // If enabled, will apply windowing function to the response. By default no
+  // windowing is applied and the response contains original number of stimulus
+  // samples.
+  bool apply_window_to_outputs = 8;
+
   // Window (also frame) duration (in seconds).
-  float window_duration_sec = 8;
+  float window_duration_sec = 9;
 
   // Frame shift (in seconds). After computing each frame, advance to the next
   // frame by this amount.
-  float frame_shift_sec = 9;
+  float frame_shift_sec = 10;
 }
 
 // Local Variables:

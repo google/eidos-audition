@@ -484,6 +484,7 @@ cc_library(
         ":auditory_response",
         ":waveform_cc_proto",
         ":waveform_utils",
+        ":windowing",
         "//eidos/stubs:logging",
     ],
 )

@@ -133,6 +133,9 @@ ABSL_FLAG(int, num_tasks, -1,
           "settings, positive number will force the precise number of tasks. "
           "Please note: Not all the models are thread-safe yet!");
 
+ABSL_FLAG(bool, apply_window_to_outputs, false,
+          "If enabled, applies windowing function to the response.");
+
 ABSL_FLAG(double, window_duration_sec, 25E-3,
           "Window (also frame) duration (width) in seconds. Default is 25 ms.");
 
@@ -172,6 +175,8 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
     stimulus_config->set_audio_scaling_gain(absl::GetFlag(
         FLAGS_audio_scaling_gain));
     stimulus_config->set_downsample_step(absl::GetFlag(FLAGS_downsample_step));
+    stimulus_config->set_apply_window_to_outputs(
+        absl::GetFlag(FLAGS_apply_window_to_outputs));
     stimulus_config->set_window_duration_sec(
         absl::GetFlag(FLAGS_window_duration_sec));
     stimulus_config->set_frame_shift_sec(absl::GetFlag(FLAGS_frame_shift_sec));
