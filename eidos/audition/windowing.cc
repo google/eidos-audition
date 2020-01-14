@@ -96,7 +96,7 @@ Eigen::ArrayXXd WindowAndIntegrateTime(const Eigen::ArrayXXd &input,
       for (int k = 0; k < frame_size; ++k) {
         sum += (frame(j, k) * frame(j, k));
       }
-      output(j, i) = std::sqrt(sum);
+      output(j, i) = std::sqrt(sum / frame_size);
     }
   }
   return output;
