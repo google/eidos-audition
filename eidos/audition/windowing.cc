@@ -35,11 +35,11 @@ int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
                        int sample_rate,
                        double window_duration,
-                       double frame_period) {
+                       double frame_shift_sec) {
   FrameInfo info;
-  const double sample_period = 1.0 / sample_rate;
+  const double sample_period = 1.0 / sample_rate;  // In seconds.
   info.frame_size = static_cast<int>(window_duration / sample_period);
-  info.frame_shift = static_cast<int>(frame_period / sample_period);
+  info.frame_shift = static_cast<int>(frame_shift_sec / sample_period);
   info.num_frames = NumFramesInWave(input.cols(), /* cur_offset */0,
                                     info.frame_size, info.frame_shift);
   return info;
@@ -48,9 +48,9 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
 std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
                                     int sample_rate,
                                     double window_duration,
-                                    double frame_period) {
+                                    double frame_shift_sec) {
   const FrameInfo &info = GetFrameInfo(input, sample_rate, window_duration,
-                                       frame_period);
+                                       frame_shift_sec);
   GOOGLE_CHECK_GT(info.num_frames, 0)
       << "Invalid number of frames: " << info.num_frames;
   std::vector<Eigen::ArrayXXd> output;

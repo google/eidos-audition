@@ -133,6 +133,13 @@ ABSL_FLAG(int, num_tasks, -1,
           "settings, positive number will force the precise number of tasks. "
           "Please note: Not all the models are thread-safe yet!");
 
+ABSL_FLAG(double, window_duration_sec, 25E-3,
+          "Window (also frame) duration (width) in seconds. Default is 25 ms.");
+
+ABSL_FLAG(double, frame_shift_sec, 1E-2,
+          "Frame shift (in seconds). After computing each frame, advance "
+          "to the next by this amount. Default is 10 ms.");
+
 namespace eidos {
 namespace audition {
 namespace {
@@ -165,6 +172,9 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
     stimulus_config->set_audio_scaling_gain(absl::GetFlag(
         FLAGS_audio_scaling_gain));
     stimulus_config->set_downsample_step(absl::GetFlag(FLAGS_downsample_step));
+    stimulus_config->set_window_duration_sec(
+        absl::GetFlag(FLAGS_window_duration_sec));
+    stimulus_config->set_frame_shift_sec(absl::GetFlag(FLAGS_frame_shift_sec));
   } else {
     GOOGLE_LOG(INFO) << "Reading stimulus configuration from "
                      << stimulus_config_proto_file;
