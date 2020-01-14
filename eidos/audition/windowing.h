@@ -18,6 +18,7 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "eidos/audition/stimulus_config.pb.h"
 
 namespace eidos {
 namespace audition {
@@ -37,9 +38,7 @@ struct FrameInfo {
 // Computes the frame information given the input signal, the duration of the
 // window and the frame shift, both given in seconds.
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
-                       int sample_rate,
-                       double window_duration_sec,
-                       double frame_shift_sec);
+                       const StimulusConfig &config);
 
 // Runs windowing function over a two-dimensional input signal with dimensions
 // (num_channels, num_samples). Returns a vector of <num_frames> two-dimensional
@@ -47,17 +46,13 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
 // seconds) is provided by <window_duration_sec>. The window is advanced in
 // steps specified by <frame_shift_sec>, specified in seconds.
 std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
-                                    int sample_rate,
-                                    double window_duration_sec,
-                                    double frame_shift_sec);
+                                    const StimulusConfig &config);
 
 // Same as above, but also integrates across time dimension in each window by
 // computing RMS for each channel. Returns an array with dimensions
 // (num_channels, num_frames).
 Eigen::ArrayXXd WindowAndIntegrateTime(const Eigen::ArrayXXd &input,
-                                       int sample_rate,
-                                       double window_duration_sec,
-                                       double frame_shift_sec);
+                                       const StimulusConfig &config);
 
 }  // namespace audition
 }  // namespace eidos

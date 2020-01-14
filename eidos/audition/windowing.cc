@@ -35,9 +35,11 @@ int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
 }  // namespace
 
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
-                       int sample_rate,
-                       double window_duration_sec,
-                       double frame_shift_sec) {
+                       const StimulusConfig &config) {
+  const int sample_rate = config.sample_rate();
+  const double window_duration_sec = config.window_duration_sec();
+  const double frame_shift_sec = config.frame_shift_sec();
+
   FrameInfo info;
   const double sample_period = 1.0 / sample_rate;  // In seconds.
   info.frame_size = static_cast<int>(window_duration_sec / sample_period);
@@ -48,11 +50,8 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
 }
 
 std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
-                                    int sample_rate,
-                                    double window_duration_sec,
-                                    double frame_shift_sec) {
-  const FrameInfo &info = GetFrameInfo(input, sample_rate, window_duration_sec,
-                                       frame_shift_sec);
+                                    const StimulusConfig &config) {
+  const FrameInfo &info = GetFrameInfo(input, config);
   GOOGLE_CHECK_GT(info.num_frames, 0)
       << "Invalid number of frames: " << info.num_frames;
   std::vector<Eigen::ArrayXXd> output;
@@ -76,11 +75,8 @@ std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
 }
 
 Eigen::ArrayXXd WindowAndIntegrateTime(const Eigen::ArrayXXd &input,
-                                       int sample_rate,
-                                       double window_duration_sec,
-                                       double frame_shift_sec) {
-  const std::vector<Eigen::ArrayXXd> &frames = Window(
-      input, sample_rate, window_duration_sec, frame_shift_sec);
+                                       const StimulusConfig &config) {
+  const std::vector<Eigen::ArrayXXd> &frames = Window(input, config);
   const int num_frames = frames.size();
   GOOGLE_CHECK_GT(num_frames, 0) << "Invalid number of frames: " << num_frames;
   const int frame_size = frames[0].cols();

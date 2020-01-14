@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "Eigen/Core"
+#include "eidos/audition/stimulus_config.pb.h"
 #include "gtest/gtest.h"
 
 namespace eidos {
@@ -31,17 +32,19 @@ constexpr int kNumExtraSamples = 3000;
 constexpr int kNumExtraStep = 33;
 
 TEST(WindowingTest, BasicCheckForFrames) {
+  StimulusConfig config;
+  config.set_sample_rate(kSampleRate);
+  config.set_window_duration_sec(kWindowWidth);
+  config.set_frame_shift_sec(kFrameShift);
   for (int i = 0; i < kNumExtraSamples; i += kNumExtraStep) {
     const int num_samples = kNumSamples + i;
     const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(
         kNumChannels, num_samples);
-    const FrameInfo &info = GetFrameInfo(input, kSampleRate, kWindowWidth,
-                                         kFrameShift);
+    const FrameInfo &info = GetFrameInfo(input, config);
     EXPECT_GT(info.num_frames, 0);
     EXPECT_GT(info.frame_size, 0);
     EXPECT_GT(info.frame_shift, 0);
-    const std::vector<Eigen::ArrayXXd> frames = Window(
-        input, kSampleRate, kWindowWidth, kFrameShift);
+    const std::vector<Eigen::ArrayXXd> frames = Window(input, config);
     EXPECT_EQ(frames.size(), info.num_frames);
     for (int j = 0; j < info.num_frames; ++j) {
       EXPECT_EQ(frames[j].rows(), kNumChannels);
@@ -53,11 +56,13 @@ TEST(WindowingTest, BasicCheckForFrames) {
 TEST(WindowingTest, BasicTimeIntegration) {
   const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(
       kNumChannels, kNumSamples);
-  const FrameInfo &info = GetFrameInfo(input, kSampleRate, kWindowWidth,
-                                       kFrameShift);
+  StimulusConfig config;
+  config.set_sample_rate(kSampleRate);
+  config.set_window_duration_sec(kWindowWidth);
+  config.set_frame_shift_sec(kFrameShift);
+  const FrameInfo &info = GetFrameInfo(input, config);
   EXPECT_GT(info.num_frames, 0);
-  const Eigen::ArrayXXd frames = WindowAndIntegrateTime(
-      input, kSampleRate, kWindowWidth, kFrameShift);
+  const Eigen::ArrayXXd frames = WindowAndIntegrateTime(input, config);
   EXPECT_EQ(frames.cols(), info.num_frames);
   EXPECT_EQ(frames.rows(), input.rows());
 }

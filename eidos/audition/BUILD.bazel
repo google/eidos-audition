@@ -102,6 +102,7 @@ cc_library(
     hdrs = ["windowing.h"],
     visibility = ["//visibility:private"],
     deps = [
+        ":stimulus_config_cc_proto",
         "//eidos/stubs:logging",
         "@com_github_eigen//:eigen",
     ],
@@ -111,6 +112,7 @@ cc_test(
     name = "windowing_test",
     srcs = ["windowing_test.cc"],
     deps = [
+        ":stimulus_config_cc_proto",
         ":windowing",
         "@com_google_googletest//:gtest_main",
     ],
