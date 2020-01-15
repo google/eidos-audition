@@ -35,6 +35,12 @@ struct FrameInfo {
   int num_frames = -1;
 };
 
+// Computes the window function given the window function type, the window
+// width and the number of channels. Returns a window with dimension
+// (num_channels, frame_size).
+Eigen::ArrayXXd ComputeWindowFunction(WindowFunction window_function,
+                                      int frame_size, int num_channels);
+
 // Computes the frame information given the input signal, the duration of the
 // window and the frame shift, both given in seconds.
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,

@@ -19,11 +19,22 @@ syntax = "proto3";
 
 package eidos.audition;
 
+// Type of the windowing function. For various types of functions see
+// "Discrete-time Signal Processing" by Alan V. Oppenheim and Ronald W. Schafer
+// (1989).
+enum WindowFunction {
+  // No windowing function to apply.
+  WINDOW_FUNCTION_NONE = 0;
+
+  // Hann window.
+  WINDOW_FUNCTION_HANN = 1;
+}
+
 // Some of the parameters may be chosen to be ignored by the particular models.
 // For example, CARFAC uses its own adaptive computation of number of output
 // channels, hence ignoring the <num_channels> parameters in this message.
 //
-// Next available ID: 11
+// Next available ID: 12
 message StimulusConfig {
   // Input sampling rate.
   int32 sample_rate = 1;
@@ -77,6 +88,9 @@ message StimulusConfig {
   // Frame shift (in seconds). After computing each frame, advance to the next
   // frame by this amount.
   float frame_shift_sec = 10;
+
+  // Type of the windowing function (if applying windowing).
+  WindowFunction window_function = 11;
 }
 
 // Local Variables:

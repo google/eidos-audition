@@ -143,6 +143,10 @@ ABSL_FLAG(double, frame_shift_sec, 1E-2,
           "Frame shift (in seconds). After computing each frame, advance "
           "to the next by this amount. Default is 10 ms.");
 
+ABSL_FLAG(std::string, window_function, "",
+          "Window function type specified as string. By default, no windowing "
+          "function is applied. Supported values: \"Hann\".");
+
 namespace eidos {
 namespace audition {
 namespace {
@@ -164,6 +168,16 @@ std::vector<AuditoryModelType> GetModelTypes() {
   return model_types;
 }
 
+// Get window function type from string.
+WindowFunction GetWindowFunctionFromString(const std::string &name) {
+  if (name == "Hann") {
+    return WINDOW_FUNCTION_HANN;
+  } else if (!name.empty()) {
+    GOOGLE_LOG(FATAL) << "Unknown window function name: " << name;
+  }
+  return WINDOW_FUNCTION_NONE;
+}
+
 // Initializes stimulus configuration from the command-line flags.
 void InitStimulusConfig(StimulusConfig *stimulus_config) {
   const std::string stimulus_config_proto_file = absl::GetFlag(
@@ -180,6 +194,8 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
     stimulus_config->set_window_duration_sec(
         absl::GetFlag(FLAGS_window_duration_sec));
     stimulus_config->set_frame_shift_sec(absl::GetFlag(FLAGS_frame_shift_sec));
+    stimulus_config->set_window_function(GetWindowFunctionFromString(
+        absl::GetFlag(FLAGS_window_function)));
   } else {
     GOOGLE_LOG(INFO) << "Reading stimulus configuration from "
                      << stimulus_config_proto_file;

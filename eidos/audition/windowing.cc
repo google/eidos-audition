@@ -32,7 +32,28 @@ int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
   return (total_num_samples - cur_offset - frame_size) / frame_shift + 1;
 }
 
+// Computes Hann window with dimension (num_channels, frame_size).
+Eigen::ArrayXXd ComputeWindowHann(int frame_size, int num_channels) {
+  const int n = frame_size - 1;
+  Eigen::VectorXd vec(frame_size);
+  for (int i = 0; i < frame_size; ++i) {
+    vec(i) = 0.5 - 0.5 * std::cos(2.0 * M_PI * i / n);
+  }
+  return vec.replicate(/* row factor */1, num_channels).transpose();
+}
+
 }  // namespace
+
+Eigen::ArrayXXd ComputeWindowFunction(WindowFunction window_function,
+                                      int frame_size, int num_channels) {
+  switch (window_function) {
+    case WINDOW_FUNCTION_HANN:
+      return ComputeWindowHann(frame_size, num_channels);
+    case WINDOW_FUNCTION_NONE:
+    default:
+      return Eigen::ArrayXXd::Constant(num_channels, frame_size, 1.0);
+  }
+}
 
 FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
                        const StimulusConfig &config) {
@@ -54,10 +75,12 @@ std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
   const FrameInfo &info = GetFrameInfo(input, config);
   GOOGLE_CHECK_GT(info.num_frames, 0)
       << "Invalid number of frames: " << info.num_frames;
+  const int num_channels = input.rows();
+  const Eigen::ArrayXXd &window_function = ComputeWindowFunction(
+      config.window_function(), info.frame_size, num_channels);
   std::vector<Eigen::ArrayXXd> output;
   output.resize(info.num_frames);
   int cur_offset = 0, cur_frame_size = info.frame_size;
-  const int num_channels = input.rows();
   const int num_samples = input.cols();
   for (int i = 0; i < info.num_frames; ++i) {
     if (cur_offset + info.frame_size > num_samples) {
@@ -69,6 +92,7 @@ std::vector<Eigen::ArrayXXd> Window(const Eigen::ArrayXXd &input,
     } else {
       output[i] = input.block(0, cur_offset, num_channels, cur_frame_size);
     }
+    output[i] *= window_function;
     cur_offset += info.frame_shift;
   }
   return output;

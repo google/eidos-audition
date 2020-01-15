@@ -67,6 +67,18 @@ TEST(WindowingTest, BasicTimeIntegration) {
   EXPECT_EQ(frames.rows(), input.rows());
 }
 
+TEST(WindowingTest, BasicWindowFunction) {
+  constexpr int kFrameSize = 100;
+  Eigen::ArrayXXd window = ComputeWindowFunction(
+      WINDOW_FUNCTION_NONE, kFrameSize, kNumChannels);
+  EXPECT_EQ(window.rows(), kNumChannels);
+  EXPECT_EQ(window.cols(), kFrameSize);
+  window = ComputeWindowFunction(
+      WINDOW_FUNCTION_HANN, kFrameSize, kNumChannels);
+  EXPECT_EQ(window.rows(), kNumChannels);
+  EXPECT_EQ(window.cols(), kFrameSize);
+}
+
 }  // namespace audition
 }  // namespace eidos
 
