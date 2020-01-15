@@ -18,7 +18,11 @@
 
 #include "Eigen/Core"
 #include "eidos/audition/stimulus_config.pb.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
+using testing::Each;
+using testing::Eq;
 
 namespace eidos {
 namespace audition {
@@ -73,6 +77,9 @@ TEST(WindowingTest, BasicWindowFunction) {
       WINDOW_FUNCTION_NONE, kFrameSize, kNumChannels);
   EXPECT_EQ(window.rows(), kNumChannels);
   EXPECT_EQ(window.cols(), kFrameSize);
+  const std::vector<double> window_vec(window.data(),
+                                       window.data() + window.size());
+  EXPECT_THAT(window_vec, Each(Eq(1.0)));
   window = ComputeWindowFunction(
       WINDOW_FUNCTION_HANN, kFrameSize, kNumChannels);
   EXPECT_EQ(window.rows(), kNumChannels);
