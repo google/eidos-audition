@@ -26,8 +26,12 @@ enum WindowFunction {
   // No windowing function to apply.
   WINDOW_FUNCTION_NONE = 0;
 
-  // Hann window.
+  // Hann window (see https://en.wikipedia.org/wiki/Hann_function).
   WINDOW_FUNCTION_HANN = 1;
+
+  // Hamming window. See:
+  //   https://en.wikipedia.org/wiki/Window_function#Hamming_window.
+  WINDOW_FUNCTION_HAMMING = 2;
 }
 
 // Some of the parameters may be chosen to be ignored by the particular models.

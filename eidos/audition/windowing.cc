@@ -34,10 +34,20 @@ int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
 
 // Computes Hann window with dimension (num_channels, frame_size).
 Eigen::ArrayXXd ComputeWindowHann(int frame_size, int num_channels) {
-  const int n = frame_size - 1;
+  const double factor = 2.0 * M_PI / (frame_size - 1);
   Eigen::VectorXd vec(frame_size);
   for (int i = 0; i < frame_size; ++i) {
-    vec(i) = 0.5 - 0.5 * std::cos(2.0 * M_PI * i / n);
+    vec(i) = 0.5 - 0.5 * std::cos(factor * i);
+  }
+  return vec.replicate(/* row factor */1, num_channels).transpose();
+}
+
+// Computes Hamming window with dimension (num_channels, frame_size).
+Eigen::ArrayXXd ComputeWindowHamming(int frame_size, int num_channels) {
+  const double factor = 2.0 * M_PI / (frame_size - 1);
+  Eigen::VectorXd vec(frame_size);
+  for (int i = 0; i < frame_size; ++i) {
+    vec(i) = 0.54 - 0.46 * std::cos(factor * i);
   }
   return vec.replicate(/* row factor */1, num_channels).transpose();
 }
@@ -49,6 +59,8 @@ Eigen::ArrayXXd ComputeWindowFunction(WindowFunction window_function,
   switch (window_function) {
     case WINDOW_FUNCTION_HANN:
       return ComputeWindowHann(frame_size, num_channels);
+    case WINDOW_FUNCTION_HAMMING:
+      return ComputeWindowHamming(frame_size, num_channels);
     case WINDOW_FUNCTION_NONE:
     default:
       return Eigen::ArrayXXd::Constant(num_channels, frame_size, 1.0);

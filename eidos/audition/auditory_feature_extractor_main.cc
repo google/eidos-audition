@@ -145,7 +145,7 @@ ABSL_FLAG(double, frame_shift_sec, 1E-2,
 
 ABSL_FLAG(std::string, window_function, "",
           "Window function type specified as string. By default, no windowing "
-          "function is applied. Supported values: \"Hann\".");
+          "function is applied. Supported values: \"Hann\", \"Hamming\".");
 
 namespace eidos {
 namespace audition {
@@ -172,6 +172,8 @@ std::vector<AuditoryModelType> GetModelTypes() {
 WindowFunction GetWindowFunctionFromString(const std::string &name) {
   if (name == "Hann") {
     return WINDOW_FUNCTION_HANN;
+  } else if (name == "Hamming") {
+    return WINDOW_FUNCTION_HAMMING;
   } else if (!name.empty()) {
     GOOGLE_LOG(FATAL) << "Unknown window function name: " << name;
   }

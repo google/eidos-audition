@@ -82,9 +82,17 @@ TEST(WindowingTest, BasicWindowFunction) {
   const std::vector<double> window_vec(window.data(),
                                        window.data() + window.size());
   EXPECT_THAT(window_vec, Each(Eq(1.0)));
+
   // Hann window.
   window = ComputeWindowFunction(
       WINDOW_FUNCTION_HANN, kFrameSize, kNumChannels);
+  EXPECT_EQ(window.rows(), kNumChannels);
+  EXPECT_EQ(window.cols(), kFrameSize);
+  EXPECT_EQ(1.0, window(0, std::ceil(kFrameSize / 2)));
+
+  // Hamming window.
+  window = ComputeWindowFunction(
+      WINDOW_FUNCTION_HAMMING, kFrameSize, kNumChannels);
   EXPECT_EQ(window.rows(), kNumChannels);
   EXPECT_EQ(window.cols(), kFrameSize);
   EXPECT_EQ(1.0, window(0, std::ceil(kFrameSize / 2)));
