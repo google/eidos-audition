@@ -14,6 +14,7 @@
 
 #include "eidos/audition/windowing.h"
 
+#include <cmath>
 #include <vector>
 
 #include "Eigen/Core"
@@ -72,7 +73,8 @@ TEST(WindowingTest, BasicTimeIntegration) {
 }
 
 TEST(WindowingTest, BasicWindowFunction) {
-  constexpr int kFrameSize = 100;
+  constexpr int kFrameSize = 101;
+  // No-op window function.
   Eigen::ArrayXXd window = ComputeWindowFunction(
       WINDOW_FUNCTION_NONE, kFrameSize, kNumChannels);
   EXPECT_EQ(window.rows(), kNumChannels);
@@ -80,10 +82,12 @@ TEST(WindowingTest, BasicWindowFunction) {
   const std::vector<double> window_vec(window.data(),
                                        window.data() + window.size());
   EXPECT_THAT(window_vec, Each(Eq(1.0)));
+  // Hann window.
   window = ComputeWindowFunction(
       WINDOW_FUNCTION_HANN, kFrameSize, kNumChannels);
   EXPECT_EQ(window.rows(), kNumChannels);
   EXPECT_EQ(window.cols(), kFrameSize);
+  EXPECT_EQ(1.0, window(0, std::ceil(kFrameSize / 2)));
 }
 
 }  // namespace audition
