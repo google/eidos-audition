@@ -143,9 +143,10 @@ ABSL_FLAG(double, frame_shift_sec, 1E-2,
           "Frame shift (in seconds). After computing each frame, advance "
           "to the next by this amount. Default is 10 ms.");
 
-ABSL_FLAG(std::string, window_function, "",
+ABSL_FLAG(std::string, window_function, "NONE",
           "Window function type specified as string. By default, no windowing "
-          "function is applied. Supported values: \"Hann\", \"Hamming\".");
+          "function is applied. Supported values: \"NONE\", \"HANN\", "
+          "\"HAMMING\".");
 
 namespace eidos {
 namespace audition {
@@ -168,16 +169,14 @@ std::vector<AuditoryModelType> GetModelTypes() {
   return model_types;
 }
 
-// Get window function type from string.
-WindowFunction GetWindowFunctionFromString(const std::string &name) {
-  if (name == "Hann") {
-    return WINDOW_FUNCTION_HANN;
-  } else if (name == "Hamming") {
-    return WINDOW_FUNCTION_HAMMING;
-  } else if (!name.empty()) {
-    GOOGLE_LOG(FATAL) << "Unknown window function name: " << name;
-  }
-  return WINDOW_FUNCTION_NONE;
+// Gets window function type from string.
+WindowFunction GetWindowFunctionFromString() {
+  const std::string function_name = absl::GetFlag(FLAGS_window_function);
+  WindowFunction window = WINDOW_FUNCTION_NONE;
+  GOOGLE_CHECK(WindowFunction_Parse(absl::StrCat(
+      "WINDOW_FUNCTION_", function_name), &window))
+      << "Failed to parse window function: " << function_name;
+  return window;
 }
 
 // Initializes stimulus configuration from the command-line flags.
@@ -196,8 +195,7 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
     stimulus_config->set_window_duration_sec(
         absl::GetFlag(FLAGS_window_duration_sec));
     stimulus_config->set_frame_shift_sec(absl::GetFlag(FLAGS_frame_shift_sec));
-    stimulus_config->set_window_function(GetWindowFunctionFromString(
-        absl::GetFlag(FLAGS_window_function)));
+    stimulus_config->set_window_function(GetWindowFunctionFromString());
   } else {
     GOOGLE_LOG(INFO) << "Reading stimulus configuration from "
                      << stimulus_config_proto_file;
