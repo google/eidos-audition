@@ -47,6 +47,7 @@
 #include "absl/strings/ascii.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
+#include "boost/filesystem/operations.hpp"
 #include "boost/filesystem/path.hpp"
 #include "eidos/audition/auditory_feature_extractor.h"
 #include "eidos/audition/auditory_model_config.pb.h"
@@ -325,6 +326,12 @@ void Run() {
   if (!waveform_file.empty() && !output_file.empty()) {
     ProcessFile(waveform_file, output_file_format, output_file);
   } else if (!waveform_file_list.empty() && !output_dir.empty()) {
+    // Check that output directory is valid.
+    const boost::filesystem::path output_dir_path(output_dir);
+    GOOGLE_CHECK(boost::filesystem::is_directory(output_dir_path))
+        << "Output directory does not exist or is not a directory: "
+        << output_dir;
+
     // Read the file list.
     std::string contents;
     GOOGLE_CHECK(utils::ReadFileContents(
