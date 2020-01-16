@@ -22,14 +22,18 @@ namespace eidos {
 namespace audition {
 namespace {
 
-// Computes number of frames remaining in the waveform starting from the current
-// offset.
-int NumFramesInWave(int total_num_samples, int cur_offset, int frame_size,
-                    int frame_shift) {
-  if (frame_size + cur_offset > total_num_samples) {
-    return 0;
+// Estimates number of frames in waveform. All quantities are supplied in
+// sample units.
+int NumFramesInWave(int total_num_samples, int frame_size, int frame_shift) {
+  const int estimated_num_frames = (total_num_samples - frame_size) / frame_shift + 1;
+  int i, frame_offset = 0;
+  for (i = 0; i < estimated_num_frames; ++i) {
+    if (frame_offset + frame_size > total_num_samples) {
+      break;
+    }
+    frame_offset += frame_shift;
   }
-  return (total_num_samples - cur_offset - frame_size) / frame_shift + 1;
+  return i;
 }
 
 // Computes Hann window with dimension (num_channels, frame_size).
@@ -74,11 +78,10 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
   const double frame_shift_sec = config.frame_shift_sec();
 
   FrameInfo info;
-  const double sample_period = 1.0 / sample_rate;  // In seconds.
-  info.frame_size = static_cast<int>(window_duration_sec / sample_period);
-  info.frame_shift = static_cast<int>(frame_shift_sec / sample_period);
-  info.num_frames = NumFramesInWave(input.cols(), /* cur_offset */0,
-                                    info.frame_size, info.frame_shift);
+  info.frame_size = static_cast<int>(window_duration_sec * sample_rate);
+  info.frame_shift = static_cast<int>(frame_shift_sec * sample_rate);
+  info.num_frames = NumFramesInWave(input.cols(), info.frame_size,
+                                    info.frame_shift);
   return info;
 }
 
