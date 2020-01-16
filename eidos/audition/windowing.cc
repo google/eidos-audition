@@ -78,8 +78,8 @@ FrameInfo GetFrameInfo(const Eigen::ArrayXXd &input,
   const double frame_shift_sec = config.frame_shift_sec();
 
   FrameInfo info;
-  info.frame_size = static_cast<int>(window_duration_sec * sample_rate);
-  info.frame_shift = static_cast<int>(frame_shift_sec * sample_rate);
+  info.frame_size = std::round(window_duration_sec * sample_rate);
+  info.frame_shift = std::round(frame_shift_sec * sample_rate);
   info.num_frames = NumFramesInWave(input.cols(), info.frame_size,
                                     info.frame_shift);
   return info;
