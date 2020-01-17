@@ -149,6 +149,14 @@ ABSL_FLAG(std::string, window_function, "NONE",
           "function is applied. Supported values: \"NONE\", \"HANN\", "
           "\"HAMMING\".");
 
+ABSL_FLAG(int, output_resample_up_factor, 0,
+          "Resample the response: Upsampling factor <p>. The signal is "
+          "resampled by <p/q>, where <q> is the downsampling factor.");
+
+ABSL_FLAG(int, output_resample_down_factor, 0,
+          "Resample the response: Downsampling factor <q>. The signal is "
+          "resampled by <p/q>, where <p> is the upsampling factor.");
+
 namespace eidos {
 namespace audition {
 namespace {
@@ -197,6 +205,10 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
         absl::GetFlag(FLAGS_window_duration_sec));
     stimulus_config->set_frame_shift_sec(absl::GetFlag(FLAGS_frame_shift_sec));
     stimulus_config->set_window_function(GetWindowFunctionFromString());
+    stimulus_config->set_output_resample_up_factor(
+        absl::GetFlag(FLAGS_output_resample_up_factor));
+    stimulus_config->set_output_resample_down_factor(
+        absl::GetFlag(FLAGS_output_resample_down_factor));
   } else {
     GOOGLE_LOG(INFO) << "Reading stimulus configuration from "
                      << stimulus_config_proto_file;

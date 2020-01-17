@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "eidos/audition/auditory_pipeline.h"
+#include "eidos/audition/resample.h"
 #include "eidos/audition/stimulus_config.pb.h"
 #include "eidos/audition/waveform_utils.h"
 #include "eidos/audition/windowing.h"
@@ -62,8 +63,27 @@ bool AuditoryFeatureExtractor::ComputeFeatures(
     return false;
   }
   GOOGLE_LOG(INFO) << "Generated " << last_output.size() << " values "
-                   << "[frequency channels: " << last_output.rows()
+                   << "[sample_rate: " << stimulus_config.sample_rate()
+                   << ", frequency channels: " << last_output.rows()
                    << ", samples: " << last_output.cols() << "].";
+
+  // Resample the output, if required.
+  if (ShouldResampleOutputs(stimulus_config)) {
+    for (auto &output : *response->mutable_outputs()) {
+      Eigen::ArrayXXd output_frames = Resample(
+          output.second, stimulus_config);
+      output.second.swap(output_frames);
+    }
+
+    // Update sampling rate.
+    const int output_sample_rate = stimulus_config.sample_rate() *
+        stimulus_config.output_resample_up_factor() /
+        stimulus_config.output_resample_down_factor();
+    stimulus_config.set_sample_rate(output_sample_rate);
+    GOOGLE_LOG(INFO) << "Resampler: Generated " << last_output.cols()
+                     << " samples. Sample rate: "
+                     << stimulus_config.sample_rate();
+  }
 
   // Apply windowing if necessary.
   if (stimulus_config.apply_window_to_outputs()) {
@@ -72,7 +92,8 @@ bool AuditoryFeatureExtractor::ComputeFeatures(
           output.second, stimulus_config);
       output.second.swap(output_frames);
     }
-    GOOGLE_LOG(INFO) << "Generated " << last_output.cols() << " frames.";
+    GOOGLE_LOG(INFO) << "Windowing: Generated " << last_output.cols()
+                     << " frames.";
   }
   return true;
 }

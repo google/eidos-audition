@@ -505,6 +505,7 @@ cc_library(
         ":auditory_feature_extractor_config_cc_proto",
         ":auditory_pipeline",
         ":auditory_response",
+        ":resample",
         ":waveform_cc_proto",
         ":waveform_utils",
         ":windowing",
