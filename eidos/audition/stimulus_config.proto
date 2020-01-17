@@ -22,6 +22,8 @@ package eidos.audition;
 // Type of the windowing function. For various types of functions see
 // "Discrete-time Signal Processing" by Alan V. Oppenheim and Ronald W. Schafer
 // (1989).
+//
+// Next available ID: 3
 enum WindowFunction {
   // No windowing function to apply.
   WINDOW_FUNCTION_NONE = 0;
@@ -38,7 +40,7 @@ enum WindowFunction {
 // For example, CARFAC uses its own adaptive computation of number of output
 // channels, hence ignoring the <num_channels> parameters in this message.
 //
-// Next available ID: 12
+// Next available ID: 14
 message StimulusConfig {
   // Input sampling rate.
   int32 sample_rate = 1;
@@ -81,20 +83,28 @@ message StimulusConfig {
   // model-specific defaults will be used.
   float highest_cf_hz = 7;
 
+  // Resample the response: Upsampling factor <p>. The signal is resampled
+  // by <p/q>, where <q> is the downsampling factor.
+  int32 output_resample_up_factor = 8;
+
+  // Resample the response: Downsampling factor <q>. The signal is resampled
+  // by <p/q>, where <p> is the upsampling factor.
+  int32 output_resample_down_factor = 9;
+
   // If enabled, will apply windowing function to the response. By default no
   // windowing is applied and the response contains original number of stimulus
   // samples.
-  bool apply_window_to_outputs = 8;
+  bool apply_window_to_outputs = 10;
 
   // Window (also frame) duration (in seconds).
-  float window_duration_sec = 9;
+  float window_duration_sec = 11;
 
   // Frame shift (in seconds). After computing each frame, advance to the next
   // frame by this amount.
-  float frame_shift_sec = 10;
+  float frame_shift_sec = 12;
 
   // Type of the windowing function (if applying windowing).
-  WindowFunction window_function = 11;
+  WindowFunction window_function = 13;
 }
 
 // Local Variables:

@@ -118,6 +118,29 @@ cc_test(
     ],
 )
 
+cc_library(
+    name = "resample",
+    srcs = ["resample.cc"],
+    hdrs = ["resample.h"],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":stimulus_config_cc_proto",
+        "//eidos/stubs:logging",
+        "@com_github_eigen//:eigen",
+        "@com_github_resample//:resample",
+    ],
+)
+
+cc_test(
+    name = "resample_test",
+    srcs = ["resample_test.cc"],
+    deps = [
+        ":stimulus_config_cc_proto",
+        ":resample",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 proto_library(
     name = "auditory_model_config_proto",
     srcs = ["auditory_model_config.proto"],
