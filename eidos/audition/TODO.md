@@ -28,10 +28,12 @@ TODO for the pre-alpha version:
         in DSAM. It is a stochastic model, and with the exception of a probabilistic
         output option, is the same as the DSAM Meddis 95 module.
   - [X] Support parallel processing of the input file lists.
-  - [ ] Investigate reimplementing parallelization using absl::Barrier API.
-  - [ ] Decide where framer (downsampler) is needed on the C++ side in the
+  - [X] Decide where framer (downsampler) is needed on the C++ side in the
         cochlear feature extractor. Existing visualizer implementation
         may be enough.
+  - [ ] Investigate reimplementing parallelization using absl::Barrier API.
+  - [ ] Resampler (Matlab-like API) is currently broken. Even downsampling by a
+        factor of 2 does not produce a coherent signal. Investigate.
 
 ### API:
   - [X] Remove dependency on feature extractor config in each model.
