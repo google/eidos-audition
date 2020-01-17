@@ -62,6 +62,11 @@ bool AuditoryFeatureExtractor::ComputeFeatures(
     GOOGLE_LOG(ERROR) << "Invalid filterbank output!";
     return false;
   }
+  if (stimulus_config.downsample_step() > 1) {
+    // Adjust the sample rate by downsample step.
+    stimulus_config.set_sample_rate(stimulus_config.sample_rate() /
+                                    stimulus_config.downsample_step());
+  }
   GOOGLE_LOG(INFO) << "Generated " << last_output.size() << " values "
                    << "[sample_rate: " << stimulus_config.sample_rate()
                    << ", frequency channels: " << last_output.rows()

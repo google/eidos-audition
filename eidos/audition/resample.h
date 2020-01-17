@@ -22,6 +22,8 @@ namespace eidos {
 namespace audition {
 
 // Checks whether resampler should be applied based on the configuration.
+// Please note, if <downsample_step> is bigger than one, this resampling
+// API will not be called.
 bool ShouldResampleOutputs(const StimulusConfig &config);
 
 // Resamples the input signal with dimensions (num_channels, num_samples). The

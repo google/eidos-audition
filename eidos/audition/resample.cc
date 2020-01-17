@@ -27,7 +27,8 @@ bool ShouldResampleOutputs(const StimulusConfig &config) {
       (config.output_resample_up_factor() > 0) &&
       (config.output_resample_down_factor() > 0) &&
       (config.output_resample_up_factor() !=
-       config.output_resample_down_factor()));
+       config.output_resample_down_factor()) &&
+      (config.downsample_step() <= 1));
 }
 
 Eigen::ArrayXXd Resample(const Eigen::ArrayXXd &input,
