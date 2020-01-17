@@ -31,6 +31,8 @@ TODO for the pre-alpha version:
   - [X] Decide where framer (downsampler) is needed on the C++ side in the
         cochlear feature extractor. Existing visualizer implementation
         may be enough.
+  - [ ] Implement downsample step functionality for all the models (move this out
+        out of Baumgarte).
   - [ ] Investigate reimplementing parallelization using absl::Barrier API.
   - [ ] Resampler (Matlab-like API) is currently broken. Even downsampling by a
         factor of 2 does not produce a coherent signal. Investigate.
