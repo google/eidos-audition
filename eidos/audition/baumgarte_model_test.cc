@@ -171,10 +171,11 @@ void CheckExcitationImpl(const std::string &waveform_path,
     input(0, i) = waveform.samples(i);
   }
 
-  // Generate excitation. Use default downsample step of 10.
+  // Generate excitation. Use downsample step of 10.
   StimulusConfig stimulus_config;
   stimulus_config.set_audio_scaling_gain(1.0);
   stimulus_config.set_sample_rate(waveform.sample_rate());
+  stimulus_config.set_downsample_step(10);
   BaumgarteModel model;
   model.Init(stimulus_config);
   Eigen::ArrayXXd output;

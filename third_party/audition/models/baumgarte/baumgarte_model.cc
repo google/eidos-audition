@@ -34,8 +34,9 @@ constexpr double kMaxBark = 25.0;
 // Model resolution in critical bands.
 constexpr double kDeltaZ = 0.1;
 
-// Write every kDownsample value to the output.
-constexpr int kDownsample = 10;
+// Write every kDownsample value to the output. Should be a positive
+// number. By default no downsampling is performed.
+constexpr int kDownsample = 1;
 
 // \pi
 constexpr double kPi = 3.14159265358979323846;
