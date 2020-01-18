@@ -31,6 +31,25 @@ bool ShouldResampleOutputs(const StimulusConfig &config) {
       (config.downsample_step() <= 1));
 }
 
+Eigen::ArrayXXd DownstepResample(const Eigen::ArrayXXd &input,
+                                 const StimulusConfig &config) {
+  const int downsample_step = config.downsample_step();
+  if (downsample_step <= 1) {
+    return input;
+  }
+  const int num_channels = input.rows();
+  const int num_output_samples = input.cols() / downsample_step;
+  Eigen::ArrayXXd output = Eigen::ArrayXXd(num_channels, num_output_samples);
+  for (int i = 0; i < num_channels; ++i) {
+    int n = 0;
+    for (int j = 0; j < num_output_samples; ++j) {
+      output(i, j) = input(i, n);
+      n += downsample_step;
+    }
+  }
+  return output;
+}
+
 Eigen::ArrayXXd Resample(const Eigen::ArrayXXd &input,
                          const StimulusConfig &config) {
   const int sample_rate = config.sample_rate();

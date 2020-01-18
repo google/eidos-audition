@@ -72,7 +72,10 @@ ABSL_FLAG(std::string, waveform_file_list, "",
           "flag.");
 
 ABSL_FLAG(int, downsample_step, -1,
-          "Output every N-th sample.");
+          "Simple temporal downsampling: Output every N-th sample. Please "
+          "note, this flag is mutually exclusive with the proper resampling "
+          "flags --output_resample_up_factor and "
+          "--output_resample_down_factor.");
 
 ABSL_FLAG(std::string, models, "",
           "Comma-separated list of model types. Supported types:\n"

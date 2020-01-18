@@ -64,12 +64,22 @@ class BaumgarteModel : public AuditoryModel {
   void ProcessSegment(const Eigen::Ref<const Eigen::ArrayXXd> &input,
                       Eigen::ArrayXXd *output) override;
 
+ protected:
+  // Updates temporal downsampling step provided by the model. Note, we only use
+  // this for testing that the model outputs match the reference implementation.
+  void set_native_downsample_step(int val) { native_downsample_step_ = val; }
+
  private:
   // Encapsulation of various channel properties.
   ChannelProperties channel_properties_;
 
   // Filterbank implementation.
   std::unique_ptr<BaumgarteHandle> impl_;
+
+  // Native downsample step. This is only used for testing. For temporal
+  // downsampling use global downsampling step provided by the stimulus
+  // configuration.
+  int native_downsample_step_ = 1;
 };
 
 }  // namespace audition

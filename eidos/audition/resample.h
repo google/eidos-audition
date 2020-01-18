@@ -26,6 +26,13 @@ namespace audition {
 // API will not be called.
 bool ShouldResampleOutputs(const StimulusConfig &config);
 
+// Simple temporal resampling using <downsample_step> parameter defined
+// in configuration. Selects every n-th sample in the input. Returns
+// resampled output with dimension (num_channels, num_original_samples
+// / downsample_step).
+Eigen::ArrayXXd DownstepResample(const Eigen::ArrayXXd &input,
+                                 const StimulusConfig &config);
+
 // Resamples the input signal with dimensions (num_channels, num_samples). The
 // input sample rate and the resampling ratios  are provided by the
 // configuration <config>. Returns the resampled signal with dimensions

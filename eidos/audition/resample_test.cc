@@ -35,7 +35,23 @@ constexpr int kSampleRate = 96000;      // 96 kHz.
 constexpr int kUpsamplingFactor = 1;
 constexpr int kDownsamplingFactor = 6;  // 16 kHz = kSampleRate / 6.
 
-TEST(WindowingTest, BasicCheckDownsample) {
+TEST(WindowingTest, BasicCheckDownsampleStep) {
+  // Check no-op.
+  StimulusConfig config;
+  config.set_downsample_step(1);
+  const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(
+      kNumChannels, kNumSamples);
+  Eigen::ArrayXXd output = DownstepResample(input, config);
+  EXPECT_EQ(input.cols(), output.cols());
+  EXPECT_EQ(input.rows(), output.rows());
+
+  config.set_downsample_step(3);
+  output = DownstepResample(input, config);
+  EXPECT_EQ(input.cols() / 3, output.cols());
+  EXPECT_EQ(input.rows(), output.rows());
+}
+
+TEST(WindowingTest, BasicCheckNormalDownsample) {
   // Prepare configuration.
   StimulusConfig config;
   config.set_sample_rate(kSampleRate);

@@ -230,6 +230,7 @@ struct EarConfigAndState {
 };
 
 void InitDefaults(const StimulusConfig &stimulus_config,
+                  int native_downsample_step,
                   EarConfigAndState *model) {
   auto *ear_param = &model->inp_ear_par;
   // Signal input at outer ear.
@@ -254,11 +255,7 @@ void InitDefaults(const StimulusConfig &stimulus_config,
   ear_param->channel = 0;
   // Temporal downsampling factor applied before writing output samples
   // (refers to input sample rate).
-  if (stimulus_config.downsample_step() > 0) {
-    ear_param->down_sample = stimulus_config.downsample_step();
-  } else {
-    ear_param->down_sample = kDownsample;
-  }
+  ear_param->down_sample = native_downsample_step;
   // Input sample rate.
   const int sample_rate = stimulus_config.sample_rate();
   if (sample_rate < kMinSampleRate) {
@@ -686,7 +683,7 @@ void BaumgarteModel::Init(const StimulusConfig &stimulus_config) {
   mutable_stimulus_config()->set_num_channels(max_sections - 1);
 
   // Initialize the model.
-  InitDefaults(this->stimulus_config(), &impl_->model);
+  InitDefaults(this->stimulus_config(), native_downsample_step_, &impl_->model);
   InitModel(&impl_->model);
 
   // Compute CF information.

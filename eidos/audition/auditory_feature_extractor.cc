@@ -62,28 +62,33 @@ bool AuditoryFeatureExtractor::ComputeFeatures(
     GOOGLE_LOG(ERROR) << "Invalid filterbank output!";
     return false;
   }
-  if (stimulus_config.downsample_step() > 1) {
-    // Adjust the sample rate by downsample step.
-    stimulus_config.set_sample_rate(stimulus_config.sample_rate() /
-                                    stimulus_config.downsample_step());
-  }
   GOOGLE_LOG(INFO) << "Generated " << last_output.size() << " values "
                    << "[sample_rate: " << stimulus_config.sample_rate()
                    << ", frequency channels: " << last_output.rows()
                    << ", samples: " << last_output.cols() << "].";
 
-  // Resample the output, if required.
-  if (ShouldResampleOutputs(stimulus_config)) {
+  // Resample the output, if required, and adjust the sampling rate.
+  const int downsample_step = stimulus_config.downsample_step();
+  if (ShouldResampleOutputs(stimulus_config) || downsample_step > 1) {
     for (auto &output : *response->mutable_outputs()) {
-      Eigen::ArrayXXd output_frames = Resample(
-          output.second, stimulus_config);
+      Eigen::ArrayXXd output_frames;
+      if (downsample_step > 1) {
+        output_frames = DownstepResample(output.second, stimulus_config);
+      } else {
+        output_frames = Resample(output.second, stimulus_config);
+      }
       output.second.swap(output_frames);
     }
 
     // Update sampling rate.
-    const int output_sample_rate = stimulus_config.sample_rate() *
-        stimulus_config.output_resample_up_factor() /
-        stimulus_config.output_resample_down_factor();
+    int output_sample_rate;
+    if (downsample_step > 1) {
+      output_sample_rate = stimulus_config.sample_rate() / downsample_step;
+    } else {
+      output_sample_rate = stimulus_config.sample_rate() *
+          stimulus_config.output_resample_up_factor() /
+          stimulus_config.output_resample_down_factor();
+    }
     stimulus_config.set_sample_rate(output_sample_rate);
     GOOGLE_LOG(INFO) << "Resampler: Generated " << last_output.cols()
                      << " samples. Sample rate: "

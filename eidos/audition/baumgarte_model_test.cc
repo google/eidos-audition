@@ -34,6 +34,12 @@ namespace eidos {
 namespace audition {
 namespace {
 
+// Test mock.
+class BaumgarteModelMock : public BaumgarteModel {
+ public:
+  using BaumgarteModel::set_native_downsample_step;
+};
+
 // Checks computed channel properties. The Slaney's implementation places center
 // frequencies in decreasing order, while Ma's implementation uses increasing
 // order.
@@ -53,14 +59,14 @@ TEST(BaumgarteModelTest, SimpleTest) {
   StimulusConfig stimulus_config;
   stimulus_config.set_sample_rate(100000 /* Hz */);
   stimulus_config.set_audio_scaling_gain(1.0);
-  constexpr int kDownsampleStep = 5;
-  stimulus_config.set_downsample_step(kDownsampleStep);
 
+  constexpr int kDownsampleStep = 5;
   constexpr int kNumEars = 1;
   constexpr int kNumSamples = 10000;  // Long enough so we get a good average.
   const Eigen::ArrayXXd input = Eigen::ArrayXXd::Random(kNumEars, kNumSamples);
 
-  BaumgarteModel model;
+  BaumgarteModelMock model;
+  model.set_native_downsample_step(kDownsampleStep);
   model.Init(stimulus_config);
   Eigen::ArrayXXd output;
   model.ProcessSegment(input, &output);
@@ -89,8 +95,8 @@ TEST(BaumgarteModelTest, DownsampleTest) {
   stimulus_config.set_sample_rate(100000 /* Hz */);
   stimulus_config.set_audio_scaling_gain(1.0);
   for (int i = 1; i < kMaxDownsample; i += kDownsampleStep) {
-    stimulus_config.set_downsample_step(i);
-    BaumgarteModel model;
+    BaumgarteModelMock model;
+    model.set_native_downsample_step(i);
     model.Init(stimulus_config);
     Eigen::ArrayXXd output;
     model.ProcessSegment(input, &output);
@@ -114,7 +120,7 @@ TEST(BaumgarteModelTest, NumberOfChannelsTest) {
   stimulus_config.set_audio_scaling_gain(1.0);
   for (int i = kMinNumChannels; i <= kMaxNumChannels; i += kStep) {
     stimulus_config.set_num_channels(i);
-    BaumgarteModel model;
+    BaumgarteModelMock model;
     model.Init(stimulus_config);
     Eigen::ArrayXXd output;
     model.ProcessSegment(input, &output);
@@ -175,8 +181,8 @@ void CheckExcitationImpl(const std::string &waveform_path,
   StimulusConfig stimulus_config;
   stimulus_config.set_audio_scaling_gain(1.0);
   stimulus_config.set_sample_rate(waveform.sample_rate());
-  stimulus_config.set_downsample_step(10);
-  BaumgarteModel model;
+  BaumgarteModelMock model;
+  model.set_native_downsample_step(10);
   model.Init(stimulus_config);
   Eigen::ArrayXXd output;
   model.ProcessSegment(input, &output);
