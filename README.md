@@ -16,9 +16,12 @@ If you use the code in your research, please cite:
 
 ```
 @inproceedings{eidos2020,
-  title   = {Eidos: An Open-Source Auditory Periphery Modeling Toolkit and Evaluation of Cross-Lingual Phonemic Contrasts},
+  title   = {{Eidos: An Open-Source Auditory Periphery Modeling Toolkit and
+             Evaluation of Cross-Lingual Phonemic Contrasts}},
   author  = {Alexander Gutkin},
-  booktitle   = {Proc. of 1st Joint Spoken Language Technologies for Under-Resourced Languages (SLTU) and Collaboration and Computing for Under-Resourced Languages (CCURL) Workshop (SLTU-CCURL 2020)},
+  booktitle = {Proc. of 1st Joint Spoken Language Technologies for Under-Resourced
+               Languages (SLTU) and Collaboration and Computing for Under-Resourced
+               Languages (CCURL) Workshop (SLTU-CCURL 2020)},
   pages   = {9--20},
   year    = {2020},
   month   = may,
