@@ -83,7 +83,7 @@ http_archive(
 # master branch. Also, "sha256" doesn't seem to work at the moment.
 git_repository(
     name = "io_absl_cpp",
-    commit = "078b89b3c046d230ef3ad39494e5852184eb528b",  # 24th October, 2019.
+    commit = "33caf1097ecce4fe892567462fa8821d477854b4",  # 26th May, 2020.
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
 
