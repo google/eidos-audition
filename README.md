@@ -12,7 +12,8 @@ Detailed documentation for the auditory library can be found
 
 ## Citation
 
-If you use the code in your research, please cite:
+If you use the code in your research, please cite the following
+[paper](https://www.aclweb.org/anthology/2020.sltu-1.2/):
 
 ```
 @inproceedings{eidos2020,
