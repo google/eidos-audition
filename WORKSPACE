@@ -43,9 +43,9 @@ http_archive(
 )
 
 # Protocol buffer library itself.
-protobuf_version = "3.9.0"
+protobuf_version = "3.12.1"
 
-protobuf_sha256 = "2ee9dcec820352671eb83e081295ba43f7a4157181dad549024d7070d079cf65"
+protobuf_sha256 = "cb9b3f9d625b5739a358268eb3421de11cacd90025f5f7672c3930553eca810e"
 
 # proto_library and related rules implicitly depend on @com_google_protobuf.
 http_archive(
