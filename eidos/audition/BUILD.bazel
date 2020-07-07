@@ -570,6 +570,8 @@ cc_library(
 py_test(
     name = "auditory_feature_extractor_e2e_test",
     srcs = ["auditory_feature_extractor_e2e_test.py"],
+    python_version = "PY3",
+    srcs_version = "PY3",
     data = [
         ":auditory_feature_extractor",
         ":testdata/configs/feature_extractor_config.textproto",
@@ -580,6 +582,8 @@ py_test(
 py_binary(
     name = "visualize_auditory_signals",
     srcs = ["visualize_auditory_signals.py"],
+    python_version = "PY3",
+    srcs_version = "PY3",
     deps = [
         "@io_abseil_py//absl:app",
         "@io_abseil_py//absl/flags",
@@ -590,6 +594,8 @@ py_binary(
 py_test(
     name = "visualize_auditory_signals_e2e_test",
     srcs = ["visualize_auditory_signals_e2e_test.py"],
+    python_version = "PY3",
+    srcs_version = "PY3",
     data = [
         "testdata/auditory/1kHz_60dB_SPL_tone_baumgarte.npy",
         ":visualize_auditory_signals",
