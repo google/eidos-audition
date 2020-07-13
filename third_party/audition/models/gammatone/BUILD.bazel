@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Collection of models derived from the Auditory Modeling Toolbox (AMT).
+# Collection of miscellaneous Gammatone filter implementations.
 
 package(default_visibility = ["//eidos/audition:__subpackages__"])
 
