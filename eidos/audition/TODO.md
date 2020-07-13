@@ -36,6 +36,8 @@ TODO for the pre-alpha version:
   - [ ] Investigate reimplementing parallelization using absl::Barrier API.
   - [ ] Resampler (Matlab-like API) is currently broken. Even downsampling by a
         factor of 2 does not produce a coherent signal. Investigate.
+  - [ ] Consider migrating PCM RIFF to boost:: waveform.
+  - [ ] Migrate to absl::logging when it is released as part of absl-cpp.
 
 ### API:
   - [X] Remove dependency on feature extractor config in each model.
