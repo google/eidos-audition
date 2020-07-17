@@ -79,11 +79,9 @@ http_archive(
 # Google Abseil - C++ Common Libraries
 # ------------------------------------
 
-# Since at the moment the releases are very infrequent, we pull the HEAD of
-# master branch. Also, "sha256" doesn't seem to work at the moment.
 git_repository(
     name = "io_absl_cpp",
-    commit = "33caf1097ecce4fe892567462fa8821d477854b4",  # 26th May, 2020.
+    commit = "ea8a689cf5e71f31f96af78859eccc11161fa36a",  # July 17, 2020.
     remote = "https://github.com/abseil/abseil-cpp.git",
 )
 
