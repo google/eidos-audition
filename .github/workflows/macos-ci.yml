@@ -33,6 +33,9 @@ jobs:
         curl -sLO "https://github.com/bazelbuild/bazelisk/releases/latest/download/$BAZEL"
         chmod +x $BAZEL
 
+    - name: Install sox
+      run: brew install sox
+
     - name: Build
       run: ./$BAZEL build -c opt //build/... //eidos/...
 
