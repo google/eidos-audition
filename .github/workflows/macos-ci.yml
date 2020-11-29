@@ -35,7 +35,8 @@ jobs:
 
     - name: Install sox and friends
       run: |
-        brew install automake matplotlib sox
+        brew install automake sox python3
+        pip3 install matplotlib
 
     - name: Build
       run: ./$BAZEL build -c opt //build/... //eidos/...
