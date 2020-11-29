@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Nisaba Bazel configuration file.
-# --------------------------------
+# Audition Bazel configuration file.
+# ----------------------------------
 # Based on TensorFlow options in:
 #   https://github.com/tensorflow/tensorflow/blob/master/.bazelrc
 #
