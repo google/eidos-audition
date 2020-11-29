@@ -39,7 +39,7 @@ jobs:
         chmod +x $BAZEL
 
     - name: Install sox
-      run: apt-get update && apt-get install -y sox
+      run: sudo apt-get install -y sox
 
     - name: Build
       run: ./$BAZEL build -c opt //build/... //eidos/...
