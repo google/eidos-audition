@@ -1,7 +1,6 @@
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/google/eidos-audition/blob/master/LICENSE)
 [![Build Tests (Linux)](https://github.com/google/eidos-audition/workflows/linux/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22linux%22)
 [![Build Tests (macOS)](https://github.com/google/eidos-audition/workflows/macos/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22macos%22)
-[![Build Status](https://travis-ci.org/google/eidos-audition.svg?branch=master)](https://travis-ci.org/google/eidos-audition)
 
 ## About
 
