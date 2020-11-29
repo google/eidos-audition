@@ -12,7 +12,7 @@ cc_test(
     srcs = ["boost_test.cc"],
     deps = [
         ":gtest_main",
-        "@io_absl_cpp//absl/strings",
+        "@com_google_absl//absl/strings",
         "@org_boost//:graph",
         "@org_boost//:regex",
     ],
@@ -44,7 +44,7 @@ cc_test(
     deps = [
         ":gtest_main",
         "@com_github_wave//:wave",
-        "@io_absl_cpp//absl/strings",
+        "@com_google_absl//absl/strings",
     ],
 )
 

@@ -40,8 +40,8 @@ cc_library(
     deps = [
         ":test_utils",
         "//eidos/stubs:logging",
+        "@com_google_absl//absl/strings",
         "@com_google_protobuf//:protobuf",
-        "@io_absl_cpp//absl/strings",
     ],
 )
 
@@ -52,9 +52,9 @@ cc_test(
     deps = [
         ":proto_utils",
         ":test_cc_proto",
+        "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
-        "@io_absl_cpp//absl/strings",
     ],
 )
 

@@ -38,7 +38,7 @@ cc_library(
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "@com_github_wave//:wave",
-        "@io_absl_cpp//absl/strings",
+        "@com_google_absl//absl/strings",
     ],
 )
 
@@ -135,8 +135,8 @@ cc_test(
     name = "resample_test",
     srcs = ["resample_test.cc"],
     deps = [
-        ":stimulus_config_cc_proto",
         ":resample",
+        ":stimulus_config_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -197,8 +197,8 @@ cc_test(
         ":auditory_response",
         "//eidos/utils:test_utils",
         "@com_github_eigen//:eigen",
+        "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
-        "@io_absl_cpp//absl/strings",
     ],
 )
 
@@ -242,7 +242,7 @@ cc_library(
         "//third_party/audition/models/dsam:sumner2002_hair_cell_synapse_model",
         "//third_party/audition/models/gammatone:gammatone_filterbank_model",
         "@com_github_eigen//:eigen",
-        "@io_absl_cpp//absl/memory",
+        "@com_google_absl//absl/memory",
     ],
 )
 
@@ -311,8 +311,8 @@ cc_test(
         ":waveform_utils",
         "//eidos/stubs:logging",
         "//third_party/audition/models/baumgarte:baumgarte_model",
+        "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
-        "@io_absl_cpp//absl/strings",
     ],
 )
 
@@ -541,10 +541,10 @@ cc_binary(
         ":waveform_utils",
         "//eidos/stubs:logging",
         "//eidos/utils:proto_utils",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+        "@com_google_absl//absl/strings",
         "@com_google_protobuf//:protobuf",
-        "@io_absl_cpp//absl/flags:flag",
-        "@io_absl_cpp//absl/flags:parse",
-        "@io_absl_cpp//absl/strings",
         "@org_boost//:filesystem",  # Path manipulation.
     ],
 )
@@ -561,22 +561,22 @@ cc_library(
         ":waveform_cc_proto",
         "//eidos/utils:proto_utils",
         "@com_github_eigen//:eigen",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
         "@com_google_googletest//:gtest",
-        "@io_absl_cpp//absl/flags:flag",
-        "@io_absl_cpp//absl/flags:parse",
     ],
 )
 
 py_test(
     name = "auditory_feature_extractor_e2e_test",
     srcs = ["auditory_feature_extractor_e2e_test.py"],
-    python_version = "PY3",
-    srcs_version = "PY3",
     data = [
         ":auditory_feature_extractor",
         ":testdata/configs/feature_extractor_config.textproto",
         "//eidos/audition/testdata/ne_np:audio",
     ],
+    python_version = "PY3",
+    srcs_version = "PY3",
 )
 
 py_binary(
@@ -594,12 +594,12 @@ py_binary(
 py_test(
     name = "visualize_auditory_signals_e2e_test",
     srcs = ["visualize_auditory_signals_e2e_test.py"],
-    python_version = "PY3",
-    srcs_version = "PY3",
     data = [
         "testdata/auditory/1kHz_60dB_SPL_tone_baumgarte.npy",
         ":visualize_auditory_signals",
     ],
+    python_version = "PY3",
+    srcs_version = "PY3",
 )
 
 # Local Variables:
