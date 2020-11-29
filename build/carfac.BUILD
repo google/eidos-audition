@@ -35,7 +35,7 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 

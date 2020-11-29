@@ -91,7 +91,7 @@ cc_test(
     srcs = ["fractional_gaussian_noise_test.cc"],
     deps = [
         "//third_party/audition/models/bruce_carney:fractional_gaussian_noise",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -104,7 +104,7 @@ cc_library(
     deps = [
         ":stimulus_config_cc_proto",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -126,8 +126,8 @@ cc_library(
     deps = [
         ":stimulus_config_cc_proto",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
         "@com_github_resample//:resample",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -159,7 +159,7 @@ cc_library(
     deps = [
         ":auditory_model_config_cc_proto",
         ":stimulus_config_cc_proto",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -170,7 +170,7 @@ cc_test(
         ":auditory_model",
         ":auditory_model_config_cc_proto",
         ":stimulus_config_cc_proto",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -185,7 +185,7 @@ cc_library(
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "@com_github_cnpy//:cnpy",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@net_zlib//:zlib",
     ],
 )
@@ -196,7 +196,7 @@ cc_test(
     deps = [
         ":auditory_response",
         "//eidos/utils:test_utils",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
@@ -241,7 +241,7 @@ cc_library(
         "//third_party/audition/models/bruce_carney:zilany2014_ihc_model",
         "//third_party/audition/models/dsam:sumner2002_hair_cell_synapse_model",
         "//third_party/audition/models/gammatone:gammatone_filterbank_model",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/memory",
     ],
 )
@@ -256,7 +256,7 @@ cc_test(
         ":auditory_pipeline_config_cc_proto",
         ":auditory_response",
         ":stimulus_config_cc_proto",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -281,7 +281,7 @@ cc_library(
         ":auditory_model_config_cc_proto",
         ":psychoacoustic_scale_utils",
         ":stimulus_config_cc_proto",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -291,7 +291,7 @@ cc_test(
     deps = [
         ":mock_basilar_membrane_model",
         ":stimulus_config_cc_proto",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -326,7 +326,7 @@ cc_test(
         "//third_party/audition/models/amt:meddis1986_hair_cell_synapse_model",
         "//third_party/audition/models/bruce_carney:bruce2018_spike_generator",
         "//third_party/audition/models/gammatone:gammatone_filterbank_model",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -352,7 +352,7 @@ cc_library(
         ":carfac_config_cc_proto",
         ":stimulus_config_cc_proto",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_carfac//:carfac",
     ],
 )
@@ -415,7 +415,7 @@ cc_test(
     srcs = ["zhang2001_spike_generator_test.cc"],
     deps = [
         "//third_party/audition/models/bruce_carney:zhang2001_spike_generator",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -451,7 +451,7 @@ cc_test(
         ":sumner2002_hair_cell_synapse_config_cc_proto",
         "//third_party/audition/models/dsam:sumner2002_hair_cell_synapse_model",
         "//third_party/audition/models/gammatone:gammatone_filterbank_model",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -464,7 +464,7 @@ cc_test(
         ":stimulus_config_cc_proto",
         "//third_party/audition/models/baumgarte:baumgarte_model",
         "//third_party/audition/models/bruce_carney:bruce2018_hair_cell_synapse_model",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -524,7 +524,7 @@ cc_test(
         ":auditory_response",
         ":waveform_cc_proto",
         ":waveform_utils",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -560,7 +560,7 @@ cc_library(
         ":auditory_response",
         ":waveform_cc_proto",
         "//eidos/utils:proto_utils",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
         "@com_google_googletest//:gtest",

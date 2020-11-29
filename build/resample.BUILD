@@ -16,14 +16,14 @@
 
 cc_library(
     name = "resample",
+    srcs = ["src/resample.cpp"],
     hdrs = [
         "src/resample.h",
         "src/upfirdn.h",
     ],
-    srcs = ["src/resample.cpp"],
-    visibility = ["//visibility:public"],
     # TODO(agutkin): Should fix this and submit a pull request.
     copts = ["-Wno-unused-variable"],
+    visibility = ["//visibility:public"],
     deps = ["@org_boost//:headers"],
 )
 

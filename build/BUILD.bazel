@@ -23,7 +23,7 @@ cc_test(
     srcs = ["eigen_test.cc"],
     deps = [
         ":gtest_main",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 

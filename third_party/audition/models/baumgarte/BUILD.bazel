@@ -26,7 +26,7 @@ cc_library(
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 

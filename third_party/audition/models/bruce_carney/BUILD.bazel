@@ -24,7 +24,7 @@ cc_library(
     deps = [
         "//eidos/audition:utils",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -39,8 +39,8 @@ cc_library(
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
         "@com_github_resample//:resample",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -55,7 +55,7 @@ cc_library(
         "//eidos/audition:utils",
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -69,7 +69,7 @@ cc_library(
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -83,7 +83,7 @@ cc_library(
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/audition:zhang2001_spike_generator_config_cc_proto",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
@@ -98,7 +98,7 @@ cc_library(
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
-        "@com_github_eigen//:eigen",
+        "@com_gitlab_eigen//:eigen",
     ],
 )
 
