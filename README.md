@@ -18,7 +18,7 @@ Detailed documentation for the auditory library can be found
 If you use the code in your research, please cite the following
 [paper](https://www.aclweb.org/anthology/2020.sltu-1.2/):
 
-```
+```bibtex
 @inproceedings{eidos2020,
   title   = {{Eidos: An Open-Source Auditory Periphery Modeling Toolkit and
              Evaluation of Cross-Lingual Phonemic Contrasts}},
