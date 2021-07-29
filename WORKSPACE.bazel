@@ -90,23 +90,6 @@ http_archive(
 )
 
 # -------------------------------------------------------------------------
-# Boost
-# -------------------------------------------------------------------------
-
-boost_version = "1_76_0"
-
-boost_sha256 = "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41"
-
-http_archive(
-    name = "org_boost",
-    build_file = "@//build:boost.BUILD",
-    sha256 = boost_sha256,
-    strip_prefix = "boost_%s" % boost_version,
-    url = "https://boostorg.jfrog.io/artifactory/main/release/%s/source/boost_%s.tar.bz2" % (
-        boost_version.replace("_", "."), boost_version),
-)
-
-# -------------------------------------------------------------------------
 # Eigen
 # -------------------------------------------------------------------------
 
@@ -178,7 +161,8 @@ http_archive(
 new_git_repository(
     name = "com_github_resample",
     build_file = "@//build:resample.BUILD",
-    commit = "9b43aba322bbfe77d5a9b5ca4adb8aa195c3c0fb",
+    #commit = "9b43aba322bbfe77d5a9b5ca4adb8aa195c3c0fb",
+    commit = "01fafdb2cf0cc447078566c9a6c171050f145268",
     remote = "https://github.com/terrygta/SignalResampler.git",
 )
 

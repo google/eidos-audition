@@ -18,7 +18,7 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "src/resample.h"
+#include "resample.h"
 
 using ::testing::DoubleNear;
 using ::testing::Pointwise;

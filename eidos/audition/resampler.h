@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef EIDOS_AUDITION_RESAMPLE_H_
-#define EIDOS_AUDITION_RESAMPLE_H_
+#ifndef EIDOS_AUDITION_RESAMPLER_H_
+#define EIDOS_AUDITION_RESAMPLER_H_
 
 #include "Eigen/Core"
 #include "eidos/audition/stimulus_config.pb.h"
@@ -56,7 +56,7 @@ Eigen::ArrayXXd Resample(const Eigen::ArrayXXd &input,
 }  // namespace audition
 }  // namespace eidos
 
-#endif  // EIDOS_AUDITION_RESAMPLE_H_
+#endif  // EIDOS_AUDITION_RESAMPLER_H_
 
 // Local Variables:
 // mode: c++

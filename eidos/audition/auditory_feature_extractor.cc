@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "eidos/audition/auditory_pipeline.h"
-#include "eidos/audition/resample.h"
+#include "eidos/audition/resampler.h"
 #include "eidos/audition/stimulus_config.pb.h"
 #include "eidos/audition/waveform_utils.h"
 #include "eidos/audition/windowing.h"

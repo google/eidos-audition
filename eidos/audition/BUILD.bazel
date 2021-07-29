@@ -118,9 +118,9 @@ cc_test(
 )
 
 cc_library(
-    name = "resample",
-    srcs = ["resample.cc"],
-    hdrs = ["resample.h"],
+    name = "resampler",
+    srcs = ["resampler.cc"],
+    hdrs = ["resampler.h"],
     visibility = ["//visibility:private"],
     deps = [
         ":stimulus_config_cc_proto",
@@ -131,10 +131,10 @@ cc_library(
 )
 
 cc_test(
-    name = "resample_test",
-    srcs = ["resample_test.cc"],
+    name = "resampler_test",
+    srcs = ["resampler_test.cc"],
     deps = [
-        ":resample",
+        ":resampler",
         ":stimulus_config_cc_proto",
         "@com_google_googletest//:gtest_main",
     ],
@@ -502,7 +502,7 @@ cc_library(
         ":auditory_feature_extractor_config_cc_proto",
         ":auditory_pipeline",
         ":auditory_response",
-        ":resample",
+        ":resampler",
         ":waveform_cc_proto",
         ":waveform_utils",
         ":windowing",

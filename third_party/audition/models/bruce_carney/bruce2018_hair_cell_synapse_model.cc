@@ -18,7 +18,7 @@
 
 #include "eidos/audition/auditory_model_config.pb.h"
 #include "eidos/stubs/logging.h"
-#include "src/resample.h"  // See @com_github_resample.
+#include "resample.h"  // See @com_github_resample.
 #include "third_party/audition/models/bruce_carney/fractional_gaussian_noise.h"
 
 namespace eidos {
@@ -111,8 +111,8 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
   const uint32_t downsample_factor = static_cast<uint32_t>(std::ceil(1.0 / (
       sample_period * kAnalysisSampleRate)));
   std::vector<double> resampled_ihc;
-  resample(1 /* upsample factor */, downsample_factor, power_law_input,
-           resampled_ihc);
+  ::resample(1 /* upsample factor */, downsample_factor, power_law_input,
+             resampled_ihc);
   GOOGLE_CHECK_LE(resampled_ihc.size(), power_law_input.size())
       << "Downsampling factor of " << downsample_factor
       << " does not result in smaller output";

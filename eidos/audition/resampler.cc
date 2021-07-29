@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "eidos/audition/resample.h"
+#include "eidos/audition/resampler.h"
 
 #include <vector>
 
 #include "eidos/stubs/logging.h"
-#include "src/resample.h"  // @com_github_resample
+#include "resample.h"  // @com_github_resample
 
 namespace eidos {
 namespace audition {
@@ -68,7 +68,7 @@ Eigen::ArrayXXd Resample(const Eigen::ArrayXXd &input,
   auto channel = std::vector<double>(input.row(0).data(),
                                      input.row(0).data() + num_samples);
   std::vector<double> output_channel;
-  resample(up_factor, down_factor, channel, output_channel);
+  ::resample(up_factor, down_factor, channel, output_channel);
   const int num_output_samples = output_channel.size();
   GOOGLE_CHECK_LT(0, num_output_samples)
       << "Invalid number of output samples: " << num_output_samples;
@@ -81,7 +81,7 @@ Eigen::ArrayXXd Resample(const Eigen::ArrayXXd &input,
   for (int i = 1; i < num_channels; ++i) {
     auto channel = std::vector<double>(input.row(i).data(),
                                        input.row(i).data() + num_samples);
-    resample(up_factor, down_factor, channel, output_channel);
+    ::resample(up_factor, down_factor, channel, output_channel);
     GOOGLE_CHECK_EQ(output_channel.size(), num_output_samples);
     output.row(i) = Eigen::Map<Eigen::ArrayXd>(output_channel.data(),
                                                num_output_samples);
