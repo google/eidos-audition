@@ -13,13 +13,13 @@
 
 #include "third_party/audition/models/bruce_carney/zilany2014_ihc_model.h"
 
+#include <cstdint>
 #include <cmath>
 #include <complex>
 #include <vector>
 
 #include "eidos/audition/auditory_model_config.pb.h"
 #include "eidos/audition/psychoacoustic_scale_utils.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -796,7 +796,7 @@ void Zilany2014IhcModel::ProcessSegment(
   GOOGLE_CHECK_GE(500E3, sample_rate)
       << "Sample rate higher than upper bound: " << sample_rate;
   const Eigen::ArrayXd &signal = input.row(0);
-  const int64 num_samples = input.cols();
+  const int64_t num_samples = input.cols();
   const int num_channels = stimulus_config().num_channels();
   *output = Eigen::ArrayXXd::Zero(num_channels, num_samples);
   Eigen::RowArrayXd ihc_voltages(num_samples);

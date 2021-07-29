@@ -14,8 +14,9 @@
 
 #include "eidos/audition/auditory_response.h"
 
+#include <cstdint>
+
 #include "cnpy.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -30,8 +31,8 @@ constexpr char kCenterFrequenciesName[] = "CENTER_FREQUENCIES";
 void AuditoryResponse::WriteNpy(const std::string &filename) const {
   GOOGLE_CHECK_LT(0, outputs_.size());
   const auto &response = outputs_.back().second;
-  const uint32 num_rows = response.rows();
-  const uint32 num_cols = response.cols();
+  const uint32_t num_rows = response.rows();
+  const uint32_t num_cols = response.cols();
   const Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
       row_mat = response.cast<float>();
   const std::vector<std::size_t> shape = {static_cast<std::size_t>(num_rows),
@@ -44,7 +45,7 @@ void AuditoryResponse::WriteNpz(const std::string &filename) const {
   std::string write_mode = "w";
   GOOGLE_LOG(INFO) << "Writing " << outputs_.size() << " outputs to "
                    << filename;
-  for (uint32 i = 0; i < outputs_.size(); ++i) {
+  for (uint32_t i = 0; i < outputs_.size(); ++i) {
     const Eigen::ArrayXXd &response = outputs_[i].second;
     const std::size_t num_rows = response.rows();
     const std::size_t num_cols = response.cols();

@@ -13,19 +13,19 @@
 #include "third_party/audition/models/bruce_carney/bruce2018_spike_generator.h"
 
 #include <algorithm>
+#include <cstdint>
 #include <cmath>
 #include <random>
 
 #include "eidos/audition/auditory_model_config.pb.h"
 #include "eidos/audition/utils.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
 namespace audition {
 namespace {
 
-constexpr int64 kZero = static_cast<int64>(0);
+constexpr int64_t kZero = static_cast<int64_t>(0);
 
 // -----------------------------------------------
 // Synaptic release / spike generation parameters.
@@ -60,10 +60,10 @@ constexpr double kMaxRefractoryPeriod = 20E-3;
 // model.
 int SpikeGenerator(const std::vector<double> &rates, double sample_period,
                    double t_rd_init, double tabs, double trel,
-                   double total_mean_rate, int64 max_num_spikes,
+                   double total_mean_rate, int64_t max_num_spikes,
                    std::vector<double> *spike_times,
                    std::vector<double> *trd_vector) {
-  const int64 num_rates = rates.size();
+  const int64_t num_rates = rates.size();
 
   // Estimating max number of spikes and events (including before zero
   // elements).
@@ -72,8 +72,8 @@ int SpikeGenerator(const std::vector<double> &rates, double sample_period,
 
   // The sufficient array size (more than 99.7% of cases) to register event
   // times after zero.
-  const int64 max_num_events =
-      std::ceil(static_cast<int64>(
+  const int64_t max_num_events =
+      std::ceil(static_cast<int64_t>(
           num_rates * sample_period / mean_inter_events +
           3 * std::sqrt(num_rates * sample_period / mean_inter_events))) +
       kNumSites;
@@ -86,13 +86,13 @@ int SpikeGenerator(const std::vector<double> &rates, double sample_period,
   // rate intervals. Also, for before zero elements, average add 2 <kNumSites>
   // events (redock and unit_rate) and add <kNumSites> (max) for <t_ref>s: 3
   // <kNumSites> spikes in total.
-  const int64 rand_buf_len = 2 * kNumSites + 1 + max_num_spikes +
-                             2 * max_num_events + max_num_spikes +
-                             3 * kNumSites;
+  const int64_t rand_buf_len = 2 * kNumSites + 1 + max_num_spikes +
+                               2 * max_num_events + max_num_spikes +
+                               3 * kNumSites;
 
   const std::vector<double> rand_nums = GetRandomUniformVector(
       rand_buf_len, 0.0, 1.0);
-  int64 rand_buf_index = 0;
+  int64_t rand_buf_index = 0;
 
   // Initial < redocking time associated with <kNumSites> release sites.
   std::vector<double> one_site_redock(kNumSites);
@@ -120,7 +120,7 @@ int SpikeGenerator(const std::vector<double> &rates, double sample_period,
       k_init * sample_period;  // Refractory regions.
   // Current refractory time.
   double t_ref = tabs - trel * std::log(rand_nums[rand_buf_index++]);
-  int64 k = k_init;  // Can be negative.
+  int64_t k = k_init;  // Can be negative.
 
   // Set dynamic mean redocking time to initial mean redocking time.
   double previous_redocking_period = t_rd_init;
@@ -246,8 +246,8 @@ std::vector<double> Bruce2018SpikeGenerator(const std::vector<double> &rates,
 
   // Compute the overall mean synaptic rate.
   double total_mean_rate = 0.0;
-  const int64 num_rates = rates.size();
-  for (int64 i = 0; i < num_rates; ++i) {
+  const int64_t num_rates = rates.size();
+  for (int64_t i = 0; i < num_rates; ++i) {
     total_mean_rate += rates[i] / num_rates;
   }
 
@@ -256,7 +256,7 @@ std::vector<double> Bruce2018SpikeGenerator(const std::vector<double> &rates,
       1.0 / total_mean_rate + time_redocking_init / kNumSites +
       absolute_refractory_period + relative_refractory_period;
   const double signal_length = num_rates * sample_period;  // In seconds.
-  const int64 max_num_spikes = std::ceil(
+  const int64_t max_num_spikes = std::ceil(
       signal_length / mean_isi + 3 * std::sqrt(signal_length / mean_isi));
 
   // Compute the spikes.

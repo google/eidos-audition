@@ -7,12 +7,12 @@
 
 #include "third_party/audition/models/baumgarte/baumgarte_model.h"
 
+#include <cstdint>
 #include <cmath>
 #include <utility>
 #include <vector>
 
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -716,11 +716,11 @@ void BaumgarteModel::ProcessSegment(
 
   const int down_sample = params.down_sample;
   int down_sample_count = down_sample - 1;
-  const int64 num_samples = input.cols();
-  const int64 num_output_samples =
+  const int64_t num_samples = input.cols();
+  const int64_t num_output_samples =
       std::ceil(static_cast<double>(num_samples) / down_sample);
   *output = Eigen::ArrayXXd::Zero(num_channels, num_output_samples);
-  for (int64 i = 0, n = 0; i < num_samples; ++i) {
+  for (int64_t i = 0, n = 0; i < num_samples; ++i) {
     const double u_inp = kVoltageAmplNorm * input(0, i);
     ComputeIHCExcitationWaves(params, wdf_coef, coupl_val, u_inp, &w_new,
                               &w_old);

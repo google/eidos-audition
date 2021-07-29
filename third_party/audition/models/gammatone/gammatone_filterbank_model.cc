@@ -14,6 +14,7 @@
 
 #include "third_party/audition/models/gammatone/gammatone_filterbank_model.h"
 
+#include <cstdint>
 #include <cmath>
 #include <complex>
 #include <tuple>
@@ -21,7 +22,6 @@
 
 #include "eidos/audition/auditory_model_config.pb.h"
 #include "eidos/audition/psychoacoustic_scale_utils.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -390,7 +390,7 @@ void GammatoneFilterbankModel::ProcessSegment(
   GOOGLE_CHECK(impl_ != nullptr);
 
   // Apply filterbank.
-  const int64 num_samples = input.cols();
+  const int64_t num_samples = input.cols();
   const int num_channels = stimulus_config().num_channels();
   *output = Eigen::ArrayXXd::Zero(num_channels, num_samples);
   if (config_.filter_type() == GAMMATONE_FILTERBANK_SLANEY) {

@@ -15,6 +15,7 @@
 #include "eidos/audition/auditory_pipeline.h"
 
 #include <algorithm>
+#include <cstdint>
 #include <functional>
 #include <map>
 #include <set>
@@ -27,7 +28,6 @@
 #include "eidos/audition/mock_basilar_membrane_model.h"
 #include "eidos/audition/sumner2002_hair_cell_synapse_config.pb.h"
 #include "eidos/audition/zhang2001_spike_generator_config.pb.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 #include "third_party/audition/models/amt/meddis1986_hair_cell_synapse_model.h"
 #include "third_party/audition/models/baumgarte/baumgarte_model.h"
@@ -124,7 +124,7 @@ bool AuditoryPipeline::Init(const AuditoryPipelineConfig &config) {
     model_counter++;
   }
   // Create the links between the models.
-  for (uint32 i = 0; i < models_.size(); ++i) {
+  for (uint32_t i = 0; i < models_.size(); ++i) {
     if (i > 0) models_[i]->set_previous_model(models_[i - 1].get());
   }
   return Verify();
@@ -160,7 +160,7 @@ bool AuditoryPipeline::Verify() const {
     { STAGE_AUDITORY_NERVE_SYNAPSE, { OUTPUT_BASILAR_MEMBRANE_DISPLACEMENT,
                                       OUTPUT_IHC_TRANSMEMBRANE_POTENTIAL,
                                       OUTPUT_SYNAPSE_FIRING_RATES} } };
-  for (uint32 i = 1; i < models_.size(); ++i) {
+  for (uint32_t i = 1; i < models_.size(); ++i) {
     const AuditoryStageType stage_type = models_[i]->stage_type();
     const auto allowed_inputs_pos = kStageValidLinks.find(stage_type);
     if (allowed_inputs_pos == kStageValidLinks.end()) {

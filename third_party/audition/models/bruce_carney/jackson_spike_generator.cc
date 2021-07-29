@@ -14,13 +14,13 @@
 #include "third_party/audition/models/bruce_carney/jackson_spike_generator.h"
 
 #include <algorithm>
+#include <cstdint>
 #include <cmath>
 #include <cstddef>
 #include <numeric>
 #include <random>
 
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 
 namespace eidos {
@@ -51,7 +51,7 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
                                           int num_repeats) {
   // Determine the mean of the rate vector. Ignore the negative or zero rates
   // effectively half-rectifying the input signal.
-  const uint64 num_samples = rates.size();
+  const uint64_t num_samples = rates.size();
   const double mean_rate = std::accumulate(
       rates.begin(), rates.end(), 0.0, [](double current, double rate) {
         if (rate > 0.0) {
@@ -62,7 +62,8 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
       }) / num_samples;
   const double dt = sample_period;
   const double T = num_samples * dt;  // Total duration of the input (sec).
-  uint64 spike_buffer_size = static_cast<uint64>(mean_rate * T * num_repeats);
+  uint64_t spike_buffer_size = static_cast<uint64_t>(
+      mean_rate * T * num_repeats);
   std::vector<double> spike_times;
   spike_times.reserve(spike_buffer_size);
 
@@ -75,7 +76,7 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
                 [&dist, &rnd_gen]() { return dist(rnd_gen); });
 
   // Integer number of discrete time bins within deadtime.
-  const uint64 dead_time_index = std::floor(kDeadTime / dt);
+  const uint64_t dead_time_index = std::floor(kDeadTime / dt);
 
   // Deadtime rounded down to length of an integer number of discrete time bins.
   const double dead_time_rounded = dead_time_index * dt;
@@ -87,7 +88,7 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
 
   // Calculate effects of a random spike before t=0 on refractoriness and the
   // time-warping sum at t=0.
-  uint64 rnd_buf_index = 0;
+  uint64_t rnd_buf_index = 0;
   const double end_of_last_dead_time = std::max(
       0.0, std::log(rnd_inputs[rnd_buf_index++]) / rates[0] + kDeadTime);
 
@@ -112,7 +113,7 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
   // multiplying by 'dt' once per time bin (when calculating the new value of
   // 'x_sum').
   double time = dt;
-  uint64 k = 0;
+  uint64_t k = 0;
   for (int j = 0; j < num_repeats; ++j) {
     for (; (k < num_samples) && (time < T); ++k, time += dt,
              refrac_value0 *= refrac_mult0,
@@ -132,7 +133,7 @@ std::vector<double> JacksonSpikeGenerator(const std::vector<double> &rates,
         // readjust the buffer and also get more random numbers since these have
         // been used up.
         if (spike_times.size() >= spike_buffer_size) {
-          spike_buffer_size += static_cast<uint64>(
+          spike_buffer_size += static_cast<uint64_t>(
               std::ceil(mean_rate * ((T - time) + (num_repeats - j - 1) * T)));
           rnd_inputs.resize(spike_buffer_size);
           std::generate(rnd_inputs.begin(), rnd_inputs.end(),

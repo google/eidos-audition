@@ -14,10 +14,10 @@
 
 #include "eidos/audition/waveform_utils.h"
 
+#include <cstdint>
 #include <limits>
 #include <vector>
 
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 #include "google/protobuf/repeated_field.h"
 #include "wave/error.h"
@@ -29,7 +29,7 @@ namespace {
 
 // Scaling factor.
 const float kInt16ToFloatDivisor =
-    -static_cast<float>(std::numeric_limits<int16>::min());
+    -static_cast<float>(std::numeric_limits<int16_t>::min());
 
 // Converts wave I/O error codes to readable strings.
 std::string ErrorToString(wave::Error status) {
@@ -134,13 +134,13 @@ void DenormalizeWaveform(Waveform *waveform) {
   GOOGLE_CHECK(waveform != nullptr);
   switch (waveform->bits_per_sample()) {
     case 8:
-      DenormalizeWaveformImpl<int8>(waveform);
+      DenormalizeWaveformImpl<int8_t>(waveform);
       break;
     case 16:
-      DenormalizeWaveformImpl<int16>(waveform);
+      DenormalizeWaveformImpl<int16_t>(waveform);
       break;
     case 32:
-      DenormalizeWaveformImpl<int32>(waveform);
+      DenormalizeWaveformImpl<int32_t>(waveform);
       break;
     default: {
       GOOGLE_LOG(FATAL) << "Unsupported sample width: "

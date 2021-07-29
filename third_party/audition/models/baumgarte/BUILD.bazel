@@ -24,7 +24,6 @@ cc_library(
         "//eidos/audition:auditory_model",
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
-        "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "@com_gitlab_eigen//:eigen",
     ],

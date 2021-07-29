@@ -12,11 +12,11 @@
 
 #include "third_party/audition/models/bruce_carney/bruce2018_hair_cell_synapse_model.h"
 
+#include <cstdint>
 #include <cmath>
 #include <vector>
 
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/stubs/integral_types.h"
 #include "eidos/stubs/logging.h"
 #include "src/resample.h"  // See @com_github_resample.
 #include "third_party/audition/models/bruce_carney/fractional_gaussian_noise.h"
@@ -51,9 +51,9 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
                               double sample_period,
                               double center_freq, double spont_rate,
                               bool exact_power_law, Eigen::RowArrayXd *rates) {
-  const uint32 num_samples = ihc_out.size();
-  const uint32 delay_point = std::floor(7500.0 / (center_freq / 1E3));
-  const uint32 num_output_samples = std::ceil(
+  const uint32_t num_samples = ihc_out.size();
+  const uint32_t delay_point = std::floor(7500.0 / (center_freq / 1E3));
+  const uint32_t num_output_samples = std::ceil(
       (num_samples + 2 * delay_point) * sample_period * kAnalysisSampleRate);
 
   // Generate random numbers. Please note, the mean and variance roughly
@@ -84,7 +84,7 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
       1.0, 1.5 - spont_rate / 100), 4.3 - 0.2 * center_freq / 1E3);
 
   std::vector<double> mapping_out(num_samples);
-  for (uint32 i = 0; i < num_samples; ++i) {
+  for (uint32_t i = 0; i < num_samples; ++i) {
     mapping_out[i] = std::pow(10.0, (0.9 * std::log10(std::fabs(
         ihc_out[i]) * cf_factor)) + mult_factor);
     if (ihc_out[i] < 0.0) mapping_out[i] = -mapping_out[i];
@@ -92,13 +92,14 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
 
   std::vector<double> power_law_input(num_samples + 3 * delay_point);
   const double spont_rate_3 = 3.0 * spont_rate;
-  for (uint32 i = 0; i < delay_point; ++i) {
+  for (uint32_t i = 0; i < delay_point; ++i) {
     power_law_input[i] = mapping_out[0] + spont_rate_3;
   }
-  for (uint32 i = delay_point; i < num_samples + delay_point; ++i) {
+  for (uint32_t i = delay_point; i < num_samples + delay_point; ++i) {
     power_law_input[i] = mapping_out[i - delay_point] + spont_rate_3;
   }
-  for (uint32 i = num_samples + delay_point; i < num_samples + 3 * delay_point;
+  for (uint32_t i = num_samples + delay_point;
+       i < num_samples + 3 * delay_point;
        ++i) {
     power_law_input[i] = power_law_input[i - 1] + spont_rate_3;
   }
@@ -107,7 +108,7 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
   // ===============================================================
   // Downsample to low frequency <kAnalysisSampleRate> for analysis.
   // ===============================================================
-  const uint32 downsample_factor = static_cast<uint32>(std::ceil(1.0 / (
+  const uint32_t downsample_factor = static_cast<uint32_t>(std::ceil(1.0 / (
       sample_period * kAnalysisSampleRate)));
   std::vector<double> resampled_ihc;
   resample(1 /* upsample factor */, downsample_factor, power_law_input,
@@ -127,7 +128,7 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
   // ===============================================================
   // Run Power-Law adaptation.
   // ===============================================================
-  uint32 k = 0;
+  uint32_t k = 0;
   double I1 = 0.0, I2 = 0.0;
   std::vector<double> sout1(num_output_samples, 0.0);
   std::vector<double> sout2(num_output_samples, 0.0);
@@ -140,13 +141,13 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
   std::vector<double> m4(num_output_samples, 0.0);
   std::vector<double> m5(num_output_samples, 0.0);
   std::vector<double> resampled_rates(num_output_samples, 0.0);
-  for (uint32 i = 0; i < num_output_samples; ++i, ++k) {
+  for (uint32_t i = 0; i < num_output_samples; ++i, ++k) {
     sout1[k] = std::max(0.0, resampled_ihc[i] + rand_nums[i] - kAlpha1 * I1);
     sout2[k] = std::max(0.0, resampled_ihc[i] - kAlpha2 * I2);
     if (exact_power_law) {
       // Exact implementation of the Power-Law.
       I1 = 0; I2 = 0;
-      for (uint32 j = 0; j <= k; ++j) {
+      for (uint32_t j = 0; j <= k; ++j) {
         I1 += (sout1[j] * kAnalysisSamplePeriod /
                ((k - j) * kAnalysisSamplePeriod + kBeta1));
         I2 += (sout2[j] * kAnalysisSamplePeriod /
@@ -220,15 +221,15 @@ void Bruce2018HairCellSynapse(const Eigen::RowArrayXd &ihc_out,
   // Upsample to the original sampling rate.
   // ===============================================================
   std::vector<double> tmp_rates((k - 1) * downsample_factor, 0.0);
-  for (uint32 i = 0; i < k - 1; ++i) {
+  for (uint32_t i = 0; i < k - 1; ++i) {
     const double incr = (resampled_rates[i + 1] - resampled_rates[i]) /
                         downsample_factor;
-    for (uint32 j = 0; j < downsample_factor; ++j) {
+    for (uint32_t j = 0; j < downsample_factor; ++j) {
       tmp_rates[i * downsample_factor + j] = resampled_rates[i] + j * incr;
     }
   }
   rates->resize(num_samples);
-  for (uint32 i = 0; i < num_samples; ++i) {
+  for (uint32_t i = 0; i < num_samples; ++i) {
     (*rates)[i] = tmp_rates[i + delay_point];
   }
 }

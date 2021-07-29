@@ -35,7 +35,6 @@ cc_library(
     hdrs = ["waveform_utils.h"],
     deps = [
         ":waveform_cc_proto",
-        "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "@com_github_wave//:wave",
         "@com_google_absl//absl/strings",
@@ -182,7 +181,6 @@ cc_library(
     deps = [
         ":auditory_model",
         ":auditory_model_config_cc_proto",
-        "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "@com_github_cnpy//:cnpy",
         "@com_gitlab_eigen//:eigen",
@@ -230,7 +228,6 @@ cc_library(
         ":stimulus_config_cc_proto",
         ":sumner2002_hair_cell_synapse_config_cc_proto",
         ":zhang2001_spike_generator_config_cc_proto",
-        "//eidos/stubs:integral_types",
         "//eidos/stubs:logging",
         "//third_party/audition/models/amt:meddis1986_hair_cell_synapse_model",
         "//third_party/audition/models/baumgarte:baumgarte_model",
