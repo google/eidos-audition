@@ -37,6 +37,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <filesystem>
 #include <string>
 #include <thread>
 #include <utility>
@@ -47,8 +48,6 @@
 #include "absl/strings/ascii.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_split.h"
-#include "boost/filesystem/operations.hpp"
-#include "boost/filesystem/path.hpp"
 #include "eidos/audition/auditory_feature_extractor.h"
 #include "eidos/audition/auditory_model_config.pb.h"
 #include "eidos/audition/auditory_pipeline_config.pb.h"
@@ -227,7 +226,7 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
 std::string OutputPathForInputWaveform(const std::string &input_wave_path,
                                        const std::string &output_file_format,
                                        const std::string &output_dir) {
-  const boost::filesystem::path path(input_wave_path);
+  const std::filesystem::path path(input_wave_path);
   GOOGLE_CHECK(path.is_absolute()) << "Path should be absolute: "
                                    << input_wave_path;
   std::string output_path = absl::StrCat(output_dir, "/",
@@ -342,8 +341,8 @@ void Run() {
     ProcessFile(waveform_file, output_file_format, output_file);
   } else if (!waveform_file_list.empty() && !output_dir.empty()) {
     // Check that output directory is valid.
-    const boost::filesystem::path output_dir_path(output_dir);
-    GOOGLE_CHECK(boost::filesystem::is_directory(output_dir_path))
+    const std::filesystem::path output_dir_path(output_dir);
+    GOOGLE_CHECK(std::filesystem::is_directory(output_dir_path))
         << "Output directory does not exist or is not a directory: "
         << output_dir;
 

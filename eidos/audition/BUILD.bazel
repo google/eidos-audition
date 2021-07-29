@@ -542,7 +542,6 @@ cc_binary(
         "@com_google_absl//absl/flags:parse",
         "@com_google_absl//absl/strings",
         "@com_google_protobuf//:protobuf",
-        "@org_boost//:filesystem",  # Path manipulation.
     ],
 )
 
