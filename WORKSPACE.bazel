@@ -59,17 +59,14 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 protobuf_deps()
 
 # -------------------------------------------------------------------------
-# GoogleTest/GoogleMock framework.
+# Google testing/mocking framework. See
+#    https://github.com/google/googletest
 # -------------------------------------------------------------------------
-
-googletest_version = "1.10.0"
 
 http_archive(
     name = "com_google_googletest",
-    urls = ["https://github.com/abseil/googletest/archive/release-%s.zip" %
-            googletest_version],
-    sha256 = "94c634d499558a76fa649edb13721dce6e98fb1e7018dfaeba3cd7a083945e91",
-    strip_prefix = "googletest-release-%s" % googletest_version,
+    strip_prefix = "googletest-master",
+    urls = ["https://github.com/google/googletest/archive/master.zip"],
 )
 
 # -------------------------------------------------------------------------
