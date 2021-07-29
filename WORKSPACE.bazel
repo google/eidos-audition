@@ -19,9 +19,9 @@ workspace(name = "com_google_eidos_audition")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-# -----
-# ZLib:
-# -----
+# -------------------------------------------------------------------------
+# ZLib. See https://zlib.net.
+# -------------------------------------------------------------------------
 
 http_archive(
     name = "net_zlib",
@@ -58,9 +58,9 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
-# --------------------------------
+# -------------------------------------------------------------------------
 # GoogleTest/GoogleMock framework.
-# --------------------------------
+# -------------------------------------------------------------------------
 
 googletest_version = "1.10.0"
 
@@ -72,9 +72,9 @@ http_archive(
     strip_prefix = "googletest-release-%s" % googletest_version,
 )
 
-# ------------------------------------
+# -------------------------------------------------------------------------
 # Google Abseil - C++ Common Libraries
-# ------------------------------------
+# -------------------------------------------------------------------------
 
 http_archive(
     name = "com_google_absl",
@@ -82,9 +82,9 @@ http_archive(
     urls = ["https://github.com/abseil/abseil-cpp/archive/master.zip"],
 )
 
-# ---------------------------------------
+# -------------------------------------------------------------------------
 # Google Abseil - Python Common Libraries
-# ---------------------------------------
+# -------------------------------------------------------------------------
 
 http_archive(
     name = "io_abseil_py",
@@ -92,26 +92,26 @@ http_archive(
     urls = ["https://github.com/abseil/abseil-py/archive/master.zip"],
 )
 
-# -----
+# -------------------------------------------------------------------------
 # Boost
-# -----
+# -------------------------------------------------------------------------
 
-boost_version = "1_71_0"
+boost_version = "1_76_0"
 
-boost_sha256 = "d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee"
+boost_sha256 = "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41"
 
 http_archive(
     name = "org_boost",
     build_file = "@//build:boost.BUILD",
     sha256 = boost_sha256,
     strip_prefix = "boost_%s" % boost_version,
-    url = ("https://dl.bintray.com/boostorg/release/1.71.0/source/boost_%s.tar.bz2" %
-           boost_version),
+    url = "https://boostorg.jfrog.io/artifactory/main/release/%s/source/boost_%s.tar.bz2" % (
+        boost_version.replace("_", "."), boost_version),
 )
 
-# -----
+# -------------------------------------------------------------------------
 # Eigen
-# -----
+# -------------------------------------------------------------------------
 
 eigen_version = "3.3.8"
 
