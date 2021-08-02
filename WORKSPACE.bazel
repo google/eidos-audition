@@ -161,8 +161,7 @@ http_archive(
 new_git_repository(
     name = "com_github_resample",
     build_file = "@//build:resample.BUILD",
-    #commit = "9b43aba322bbfe77d5a9b5ca4adb8aa195c3c0fb",
-    commit = "01fafdb2cf0cc447078566c9a6c171050f145268",
+    commit = "828a53db55c5e756fdffbd1459dcfba24c6fc9e7",
     remote = "https://github.com/terrygta/SignalResampler.git",
 )
 
