@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <unistd.h>
+#include <filesystem>
 #include <cstdio>
 #include <string>
 #include <utility>
@@ -21,7 +22,6 @@
 #include "eidos/stubs/status-matchers.h"
 #include "eidos/utils/proto_utils.h"
 #include "eidos/utils/test.pb.h"
-#include "eidos/utils/test_utils.h"
 #include "google/protobuf/util/message_differencer.h"
 #include "gtest/gtest.h"
 
@@ -57,31 +57,23 @@ TEST(ProtoUtilsTest, ReadingTextFormat) {
 TEST(ProtoUtilsTest, WriteBinaryFormat) {
   TestProto proto;
   SetupProto(&proto);
-  const auto temp_path_info = utils::TempPath();
-  const std::string temp_path = temp_path_info.second;
+  const std::string temp_path = std::tmpnam(nullptr);
   ASSERT_OK(WriteBinaryProto(proto, temp_path));
   TestProto new_proto;
   EXPECT_OK(ReadBinaryProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));
-
-  // Clean up temporary file.
-  close(temp_path_info.first);
-  unlink(temp_path.c_str());
+  EXPECT_TRUE(std::filesystem::remove(temp_path));
 }
 
 TEST(ProtoUtilsTest, WriteTextFormat) {
   TestProto proto;
   SetupProto(&proto);
-  const auto temp_path_info = utils::TempPath();
-  const std::string temp_path = temp_path_info.second;
+  const std::string temp_path = std::tmpnam(nullptr);
   ASSERT_OK(WriteTextProto(proto, temp_path));
   TestProto new_proto;
   EXPECT_OK(ReadTextProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));
-
-  // Clean up temporary file.
-  close(temp_path_info.first);
-  unlink(temp_path.c_str());
+  EXPECT_TRUE(std::filesystem::remove(temp_path));
 }
 
 }  // namespace utils
