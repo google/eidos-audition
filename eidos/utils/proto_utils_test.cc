@@ -59,7 +59,7 @@ TEST(ProtoUtilsTest, WriteBinaryFormat) {
   SetupProto(&proto);
   const auto temp_path_info = utils::TempPath();
   const std::string temp_path = temp_path_info.second;
-  ASSERT_TRUE(WriteBinaryProto(proto, temp_path));
+  ASSERT_OK(WriteBinaryProto(proto, temp_path));
   TestProto new_proto;
   EXPECT_OK(ReadBinaryProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));
@@ -74,7 +74,7 @@ TEST(ProtoUtilsTest, WriteTextFormat) {
   SetupProto(&proto);
   const auto temp_path_info = utils::TempPath();
   const std::string temp_path = temp_path_info.second;
-  ASSERT_TRUE(WriteTextProto(proto, temp_path));
+  ASSERT_OK(WriteTextProto(proto, temp_path));
   TestProto new_proto;
   EXPECT_OK(ReadTextProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));

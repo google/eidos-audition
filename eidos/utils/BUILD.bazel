@@ -39,7 +39,6 @@ cc_library(
     hdrs = ["proto_utils.h"],
     deps = [
         ":test_utils",
-        "//eidos/stubs:logging",
         "//eidos/stubs:status_macros",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",

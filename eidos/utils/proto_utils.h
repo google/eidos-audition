@@ -21,7 +21,6 @@
 
 #include "absl/status/status.h"
 #include "absl/strings/string_view.h"
-#include "eidos/stubs/logging.h"
 #include "eidos/stubs/status_macros.h"
 #include "google/protobuf/message.h"
 #include "google/protobuf/text_format.h"
@@ -36,8 +35,8 @@ absl::Status ReadFileContents(absl::string_view filepath, bool binary_mode,
 
 // Writes contents to a file. If <binary_mode> is enabled the file is written
 // in binary format.
-bool WriteFileContents(const std::string &contents, bool binary_mode,
-                       absl::string_view filepath);
+absl::Status WriteFileContents(const std::string &contents, bool binary_mode,
+                               absl::string_view filepath);
 
 // Reads binary protocol buffer message of the supplied type from a given file
 // path.
@@ -70,25 +69,25 @@ absl::Status ReadTextProto(absl::string_view filepath, ProtoType *message) {
 
 // Writes proto to a given location in binary format.
 template <typename ProtoType>
-bool WriteBinaryProto(const ProtoType &message, absl::string_view filepath) {
+absl::Status WriteBinaryProto(const ProtoType &message, absl::string_view filepath) {
   std::string contents;
   if (!message.SerializeToString(&contents)) {
-    GOOGLE_LOG(ERROR) << "Binary serialization failed!";
-    return false;
+    return absl::InternalError("Binary serialization failed!");
   }
-  return WriteFileContents(contents, true /* binary mode */, filepath);
+  RETURN_IF_ERROR(WriteFileContents(contents, true /* binary mode */, filepath));
+  return absl::OkStatus();
 }
 
 // Writes proto to a given location in text format.
 template <typename ProtoType>
-bool WriteTextProto(const ProtoType &message, absl::string_view filepath) {
+absl::Status WriteTextProto(const ProtoType &message, absl::string_view filepath) {
   using google::protobuf::TextFormat;
   std::string contents;
   if (!TextFormat::PrintToString(message, &contents)) {
-    GOOGLE_LOG(ERROR) << "Text serialization failed!";
-    return false;
+    return absl::InternalError("Text serialization failed!");
   }
-  return WriteFileContents(contents, false /* binary mode */, filepath);
+  RETURN_IF_ERROR(WriteFileContents(contents, false /* binary mode */, filepath));
+  return absl::OkStatus();
 }
 
 }  // namespace utils

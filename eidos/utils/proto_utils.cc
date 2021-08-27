@@ -38,22 +38,22 @@ absl::Status ReadFileContents(absl::string_view filepath, bool binary_mode,
   return absl::OkStatus();
 }
 
-bool WriteFileContents(const std::string &contents, bool binary_mode,
-                       absl::string_view filepath) {
+absl::Status WriteFileContents(const std::string &contents, bool binary_mode,
+                               absl::string_view filepath) {
   const std::string filepath_str(filepath);
   std::ios_base::openmode mode = std::ios_base::out;
   if (binary_mode) mode |= std::ios::binary;
   std::ofstream output_stream(filepath_str, mode);
   if (!output_stream) {
-    GOOGLE_LOG(ERROR) << "Failed to open \"" << filepath_str << "\"";
-    return false;
+    return absl::InternalError(absl::StrCat(
+        "Failed to open \"", filepath_str, "\""));
   }
   output_stream.write(contents.c_str(), contents.size());
   if (!output_stream) {
-    GOOGLE_LOG(ERROR) << "Failed to write to \"" << filepath_str << "\"";
-    return false;
+    return absl::InternalError(absl::StrCat(
+        "Failed to write to \"", filepath_str, "\""));
   }
-  return true;
+  return absl::OkStatus();
 }
 
 }  // namespace utils
