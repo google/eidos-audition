@@ -32,6 +32,16 @@ cc_library(
     deps = ["@com_google_protobuf//:protobuf"],
 )
 
+cc_library(
+    name = "status_macros",
+    hdrs = ["status_macros.h"],
+    deps = [
+        "@com_google_absl//absl/base:core_headers",
+        "@com_google_absl//absl/status",
+        "@com_google_protobuf//:protobuf"
+    ],
+)
+
 # Local Variables:
 # mode: python
 # End:
