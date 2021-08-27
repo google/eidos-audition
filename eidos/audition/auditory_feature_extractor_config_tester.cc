@@ -24,6 +24,7 @@
 #include "eidos/audition/auditory_feature_extractor_config.pb.h"
 #include "eidos/audition/auditory_response.h"
 #include "eidos/audition/waveform.pb.h"
+#include "eidos/stubs/status-matchers.h"
 #include "eidos/utils/proto_utils.h"
 #include "gtest/gtest.h"
 
@@ -39,7 +40,7 @@ TEST(AuditoryFeatureExtractorConfigTest, CheckRunConfig) {
   ASSERT_TRUE(!config_proto_file.empty())
       << "Specify --config_proto_file";
   AuditoryFeatureExtractorConfig config;
-  ASSERT_TRUE(utils::ReadTextProto(config_proto_file, &config))
+  ASSERT_OK(utils::ReadTextProto(config_proto_file, &config))
       << "Failed to read configuration from: " << config_proto_file;
   config.mutable_config()->set_downsample_step(1);  // No downsampling.
 

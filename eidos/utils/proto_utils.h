@@ -19,10 +19,11 @@
 
 #include <string>
 
+#include "absl/status/status.h"
 #include "absl/strings/string_view.h"
 #include "eidos/stubs/logging.h"
+#include "eidos/stubs/status_macros.h"
 #include "google/protobuf/message.h"
-#include "google/protobuf/stubs/status.h"
 #include "google/protobuf/text_format.h"
 
 namespace eidos {
@@ -30,8 +31,8 @@ namespace utils {
 
 // Reads contents of a file into a string buffer. If <binary_mode> is enabled,
 // opens the file in binary mode.
-bool ReadFileContents(absl::string_view filepath, bool binary_mode,
-                      std::string *contents);
+absl::Status ReadFileContents(absl::string_view filepath, bool binary_mode,
+                              std::string *contents);
 
 // Writes contents to a file. If <binary_mode> is enabled the file is written
 // in binary format.
@@ -41,28 +42,30 @@ bool WriteFileContents(const std::string &contents, bool binary_mode,
 // Reads binary protocol buffer message of the supplied type from a given file
 // path.
 template <typename ProtoType>
-bool ReadBinaryProto(absl::string_view filepath, ProtoType *message) {
+absl::Status ReadBinaryProto(absl::string_view filepath, ProtoType *message) {
   // TODO(agutkin): It may be more efficient to parse directly from
   // std::istream.
   std::string contents;
-  if (!ReadFileContents(filepath, true /* binary_mode */, &contents)) {
-    return false;
+  RETURN_IF_ERROR(ReadFileContents(filepath, true /* binary_mode */, &contents));
+  if (!message->ParseFromString(contents)) {
+    return absl::InternalError("Failed to parse binary proto");
   }
-  return message->ParseFromString(contents);
+  return absl::OkStatus();
 }
 
 // Reads textual protocol buffer message of the supplied type from a given file
 // path.
 template <typename ProtoType>
-bool ReadTextProto(absl::string_view filepath, ProtoType *message) {
+absl::Status ReadTextProto(absl::string_view filepath, ProtoType *message) {
   // TODO(agutkin): It may be more efficient to parse directly from
   // io::ZeroCopyInputStream rather than from a string buffer.
   std::string contents;
-  if (!ReadFileContents(filepath, false /* binary_mode */, &contents)) {
-    return false;
-  }
+  RETURN_IF_ERROR(ReadFileContents(filepath, false /* binary_mode */, &contents));
   using google::protobuf::TextFormat;
-  return TextFormat::ParseFromString(contents, message);
+  if (!TextFormat::ParseFromString(contents, message)) {
+    return absl::InternalError("Failed to parse text proto");
+  }
+  return absl::OkStatus();
 }
 
 // Writes proto to a given location in binary format.

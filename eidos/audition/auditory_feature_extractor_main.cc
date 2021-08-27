@@ -214,8 +214,8 @@ void InitStimulusConfig(StimulusConfig *stimulus_config) {
   } else {
     GOOGLE_LOG(INFO) << "Reading stimulus configuration from "
                      << stimulus_config_proto_file;
-    GOOGLE_CHECK(utils::ReadTextProto(stimulus_config_proto_file,
-                                      stimulus_config))
+    GOOGLE_CHECK_OK(utils::ReadTextProto(stimulus_config_proto_file,
+                                         stimulus_config))
         << "Failed to read stimulus configuration from: "
         << stimulus_config_proto_file;
   }
@@ -286,7 +286,7 @@ void ProcessFile(const std::string &waveform_file,
     AuditoryFeatureExtractorConfig pipeline_config;
     if (!config_proto_file.empty()) {
       GOOGLE_LOG(INFO) << "Reading configuration from " << config_proto_file;
-      GOOGLE_CHECK(utils::ReadTextProto(config_proto_file, &pipeline_config))
+      GOOGLE_CHECK_OK(utils::ReadTextProto(config_proto_file, &pipeline_config))
           << "Failed to read configuration from: " << config_proto_file;
     } else {  // Read from string.
       using google::protobuf::TextFormat;
@@ -348,7 +348,7 @@ void Run() {
 
     // Read the file list.
     std::string contents;
-    GOOGLE_CHECK(utils::ReadFileContents(
+    GOOGLE_CHECK_OK(utils::ReadFileContents(
         waveform_file_list, /* binary_mode= */false, &contents))
         << "Failed to read " << waveform_file_list;
     std::vector<std::string> waveform_files = absl::StrSplit(

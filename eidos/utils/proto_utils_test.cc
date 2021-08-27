@@ -18,6 +18,7 @@
 #include <utility>
 
 #include "absl/strings/str_cat.h"
+#include "eidos/stubs/status-matchers.h"
 #include "eidos/utils/proto_utils.h"
 #include "eidos/utils/test.pb.h"
 #include "eidos/utils/test_utils.h"
@@ -47,8 +48,8 @@ TEST(ProtoUtilsTest, ReadingTextFormat) {
   SetupProto(&proto);
   const std::string proto_path = absl::StrCat(kTestDir, "/test.textproto");
   TestProto new_proto;
-  EXPECT_FALSE(ReadTextProto(kInvalidPath, &new_proto));
-  ASSERT_TRUE(ReadTextProto(proto_path, &new_proto));
+  EXPECT_FALSE(ReadTextProto(kInvalidPath, &new_proto).ok());
+  ASSERT_OK(ReadTextProto(proto_path, &new_proto));
   EXPECT_EQ(new_proto.name(), proto.name());
   EXPECT_EQ(new_proto.id(), proto.id());
 }
@@ -60,7 +61,7 @@ TEST(ProtoUtilsTest, WriteBinaryFormat) {
   const std::string temp_path = temp_path_info.second;
   ASSERT_TRUE(WriteBinaryProto(proto, temp_path));
   TestProto new_proto;
-  EXPECT_TRUE(ReadBinaryProto(temp_path, &new_proto));
+  EXPECT_OK(ReadBinaryProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));
 
   // Clean up temporary file.
@@ -75,7 +76,7 @@ TEST(ProtoUtilsTest, WriteTextFormat) {
   const std::string temp_path = temp_path_info.second;
   ASSERT_TRUE(WriteTextProto(proto, temp_path));
   TestProto new_proto;
-  EXPECT_TRUE(ReadTextProto(temp_path, &new_proto));
+  EXPECT_OK(ReadTextProto(temp_path, &new_proto));
   EXPECT_TRUE(MessageDifferencer::Equals(new_proto, proto));
 
   // Clean up temporary file.

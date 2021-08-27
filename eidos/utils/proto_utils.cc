@@ -17,23 +17,25 @@
 #include <fstream>
 #include <sstream>
 
+#include "absl/strings/str_cat.h"
+
 namespace eidos {
 namespace utils {
 
-bool ReadFileContents(absl::string_view filepath, bool binary_mode,
-                      std::string *contents) {
+absl::Status ReadFileContents(absl::string_view filepath, bool binary_mode,
+                              std::string *contents) {
   const std::string filepath_str(filepath);
   std::ios_base::openmode mode = std::ios_base::in;
   if (binary_mode) mode |= std::ios::binary;
   std::ifstream input_stream(filepath_str, mode);
   if (!input_stream) {
-    GOOGLE_LOG(ERROR) << "Failed to open \"" << filepath_str << "\"";
-    return false;
+    return absl::NotFoundError(absl::StrCat(
+        "Failed to open \"", filepath_str, "\""));
   }
   std::ostringstream string_buffer;
   string_buffer << input_stream.rdbuf();
   *contents = string_buffer.str();
-  return true;
+  return absl::OkStatus();
 }
 
 bool WriteFileContents(const std::string &contents, bool binary_mode,

@@ -11,7 +11,7 @@
 #include "gmock/gmock-matchers.h"
 #include "gtest/gtest-matchers.h"
 #include "gtest/gtest.h"
-#include "nisaba/port/status_macros.h"
+#include "eidos/stubs/status_macros.h"
 
 namespace testing {
 namespace status {

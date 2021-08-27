@@ -555,6 +555,7 @@ cc_library(
         ":auditory_model_config_cc_proto",
         ":auditory_response",
         ":waveform_cc_proto",
+        "//eidos/stubs:status-matchers",
         "//eidos/utils:proto_utils",
         "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/flags:flag",
