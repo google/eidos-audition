@@ -143,15 +143,18 @@ new_git_repository(
 )
 
 # -------------------------------------------------------------------------
-# Six is a Python 2 and 3 compatibility library.
+# Six is a Python 2 and 3 compatibility library. See
+#   https://github.com/benjaminp/six
 # -------------------------------------------------------------------------
+
+six_version = "1.16.0"
 
 http_archive(
     name = "six_archive",
     build_file = "@//build:six.BUILD",
-    sha256 = "70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9",
-    strip_prefix = "six-1.11.0",
-    urls = ["https://pypi.python.org/packages/16/d8/bc6316cf98419719bd59c91742194c111b6f2e85abac88e496adefaf7afe/six-1.11.0.tar.gz#md5=d12789f9baf7e9fb2524c0c64f1773f8"],
+    sha256 = "af6745f78dceb1ad5107dc6c2d3646c8cb57cf4668ba7b5427145a71a690f60e",
+    strip_prefix = "six-%s" % six_version,
+    urls = ["https://github.com/benjaminp/six/archive/refs/tags/%s.tar.gz" % six_version],
 )
 
 # -------------------------------------------------------------------------
