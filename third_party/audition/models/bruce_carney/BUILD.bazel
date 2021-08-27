@@ -23,7 +23,7 @@ cc_library(
     hdrs = ["fractional_gaussian_noise.h"],
     deps = [
         "//eidos/audition:utils",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )
@@ -37,7 +37,7 @@ cc_library(
         "//eidos/audition:auditory_model",
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_github_resample//:resample",
         "@com_gitlab_eigen//:eigen",
     ],
@@ -52,7 +52,7 @@ cc_library(
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/audition:utils",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )
@@ -65,7 +65,7 @@ cc_library(
         "//eidos/audition:auditory_model",
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )
@@ -79,7 +79,7 @@ cc_library(
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/audition:zhang2001_spike_generator_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )
@@ -93,7 +93,7 @@ cc_library(
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:psychoacoustic_scale_utils",
         "//eidos/audition:stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )

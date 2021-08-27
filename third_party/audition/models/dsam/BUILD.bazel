@@ -26,7 +26,7 @@ cc_library(
         "//eidos/audition:auditory_model_config_cc_proto",
         "//eidos/audition:stimulus_config_cc_proto",
         "//eidos/audition:sumner2002_hair_cell_synapse_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )

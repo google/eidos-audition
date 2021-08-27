@@ -26,7 +26,7 @@
 #include "eidos/audition/stimulus_config.pb.h"
 #include "eidos/audition/waveform.pb.h"
 #include "eidos/audition/waveform_utils.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "gtest/gtest.h"
 #include "third_party/audition/models/baumgarte/baumgarte_model.h"
 

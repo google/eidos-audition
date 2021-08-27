@@ -14,10 +14,10 @@
 
 // Replacement for map utilities.
 
-#ifndef EIDOS_STUBS_MAP_UTIL_H_
-#define EIDOS_STUBS_MAP_UTIL_H_
+#ifndef EIDOS_PORT_MAP_UTIL_H_
+#define EIDOS_PORT_MAP_UTIL_H_
 
-#include "google/protobuf/stubs/map_util.h"
+#include "google/protobuf/port/map_util.h"
 
 namespace eidos {
 
@@ -28,7 +28,7 @@ using ::google::protobuf::FindWithDefault;
 
 }  // namespace eidos
 
-#endif  // EIDOS_STUBS_MAP_UTIL_H_
+#endif  // EIDOS_PORT_MAP_UTIL_H_
 
 // Local Variables:
 // mode: c++

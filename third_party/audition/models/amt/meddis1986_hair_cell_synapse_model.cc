@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 
 namespace eidos {
 namespace audition {

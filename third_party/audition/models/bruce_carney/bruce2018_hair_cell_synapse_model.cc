@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "resample.h"  // See @com_github_resample.
 #include "third_party/audition/models/bruce_carney/fractional_gaussian_noise.h"
 

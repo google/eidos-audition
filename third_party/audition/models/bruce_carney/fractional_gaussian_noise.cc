@@ -13,7 +13,7 @@
 #include <vector>
 
 #include "eidos/audition/utils.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "unsupported/Eigen/FFT"
 
 namespace eidos {

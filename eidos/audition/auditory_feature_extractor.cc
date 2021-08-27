@@ -21,7 +21,7 @@
 #include "eidos/audition/stimulus_config.pb.h"
 #include "eidos/audition/waveform_utils.h"
 #include "eidos/audition/windowing.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 
 namespace eidos {
 namespace audition {

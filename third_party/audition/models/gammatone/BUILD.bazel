@@ -26,7 +26,7 @@ cc_library(
         "//eidos/audition:gammatone_filterbank_config_cc_proto",
         "//eidos/audition:psychoacoustic_scale_utils",
         "//eidos/audition:stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )

@@ -17,7 +17,7 @@
 #include <cstdint>
 
 #include "cnpy.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 
 namespace eidos {
 namespace audition {

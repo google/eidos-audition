@@ -18,7 +18,7 @@
 
 #include "Eigen/Core"
 #include "eidos/audition/stimulus_config.pb.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "gtest/gtest.h"
 #include "third_party/audition/models/bruce_carney/zilany2014_ihc_model.h"
 

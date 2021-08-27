@@ -54,7 +54,7 @@
 #include "eidos/audition/auditory_response.h"
 #include "eidos/audition/waveform.pb.h"
 #include "eidos/audition/waveform_utils.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "eidos/utils/proto_utils.h"
 #include "google/protobuf/text_format.h"
 

@@ -15,14 +15,14 @@
 // Alias header for the Google logging stubs which are part of Google protobufs.
 //
 // See logging documentation here
-//   https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/stubs/logging.h
+//   https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/port/logging.h
 
-#ifndef EIDOS_STUBS_LOGGING_H_
-#define EIDOS_STUBS_LOGGING_H_
+#ifndef EIDOS_PORT_LOGGING_H_
+#define EIDOS_PORT_LOGGING_H_
 
 #include "google/protobuf/stubs/logging.h"
 
-#endif  // EIDOS_STUBS_LOGGING_H_
+#endif  // EIDOS_PORT_LOGGING_H_
 
 // Local Variables:
 // mode: c++

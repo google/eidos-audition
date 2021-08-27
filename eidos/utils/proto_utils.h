@@ -21,7 +21,7 @@
 
 #include "absl/status/status.h"
 #include "absl/strings/string_view.h"
-#include "eidos/stubs/status_macros.h"
+#include "eidos/port/status_macros.h"
 #include "google/protobuf/message.h"
 #include "google/protobuf/text_format.h"
 

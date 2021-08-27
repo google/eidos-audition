@@ -1,5 +1,5 @@
-#ifndef EIDOS_STUBS_STATUS_MACROS_H_
-#define EIDOS_STUBS_STATUS_MACROS_H_
+#ifndef EIDOS_PORT_STATUS_MACROS_H_
+#define EIDOS_PORT_STATUS_MACROS_H_
 
 #include <utility>
 
@@ -53,4 +53,4 @@ namespace ediso {
 
 }  // namespace eidos
 
-#endif  // EIDOS_STUBS_STATUS_MACROS_H_
+#endif  // EIDOS_PORT_STATUS_MACROS_H_

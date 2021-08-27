@@ -18,7 +18,7 @@
 #include <limits>
 #include <vector>
 
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "google/protobuf/repeated_field.h"
 #include "wave/error.h"
 #include "wave/file.h"

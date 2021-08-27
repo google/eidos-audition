@@ -22,7 +22,7 @@
 #include "eidos/audition/carfac_config.pb.h"
 #include "eidos/audition/carfac_model.h"
 #include "eidos/audition/stimulus_config.pb.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "gtest/gtest.h"
 
 namespace eidos {

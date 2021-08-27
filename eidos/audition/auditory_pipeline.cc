@@ -28,7 +28,7 @@
 #include "eidos/audition/mock_basilar_membrane_model.h"
 #include "eidos/audition/sumner2002_hair_cell_synapse_config.pb.h"
 #include "eidos/audition/zhang2001_spike_generator_config.pb.h"
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "third_party/audition/models/amt/meddis1986_hair_cell_synapse_model.h"
 #include "third_party/audition/models/baumgarte/baumgarte_model.h"
 #include "third_party/audition/models/bruce_carney/bruce2018_hair_cell_synapse_model.h"

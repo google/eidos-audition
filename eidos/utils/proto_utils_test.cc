@@ -19,7 +19,7 @@
 #include <utility>
 
 #include "absl/strings/str_cat.h"
-#include "eidos/stubs/status-matchers.h"
+#include "eidos/port/status-matchers.h"
 #include "eidos/utils/proto_utils.h"
 #include "eidos/utils/test.pb.h"
 #include "google/protobuf/util/message_differencer.h"

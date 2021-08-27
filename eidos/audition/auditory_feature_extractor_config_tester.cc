@@ -24,7 +24,7 @@
 #include "eidos/audition/auditory_feature_extractor_config.pb.h"
 #include "eidos/audition/auditory_response.h"
 #include "eidos/audition/waveform.pb.h"
-#include "eidos/stubs/status-matchers.h"
+#include "eidos/port/status-matchers.h"
 #include "eidos/utils/proto_utils.h"
 #include "gtest/gtest.h"
 

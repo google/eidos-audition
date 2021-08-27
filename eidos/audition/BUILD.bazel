@@ -35,7 +35,7 @@ cc_library(
     hdrs = ["waveform_utils.h"],
     deps = [
         ":waveform_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_github_wave//:wave",
         "@com_google_absl//absl/strings",
     ],
@@ -57,7 +57,7 @@ cc_library(
     name = "utils",
     srcs = ["utils.cc"],
     hdrs = ["utils.h"],
-    deps = ["//eidos/stubs:logging"],
+    deps = ["//eidos/port:logging"],
 )
 
 cc_test(
@@ -101,7 +101,7 @@ cc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
     ],
 )
@@ -123,7 +123,7 @@ cc_library(
     visibility = ["//visibility:private"],
     deps = [
         ":stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_github_resample//:resample",
         "@com_gitlab_eigen//:eigen",
     ],
@@ -180,7 +180,7 @@ cc_library(
     deps = [
         ":auditory_model",
         ":auditory_model_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_github_cnpy//:cnpy",
         "@com_gitlab_eigen//:eigen",
         "@net_zlib//:zlib",
@@ -226,7 +226,7 @@ cc_library(
         ":stimulus_config_cc_proto",
         ":sumner2002_hair_cell_synapse_config_cc_proto",
         ":zhang2001_spike_generator_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "//third_party/audition/models/amt:meddis1986_hair_cell_synapse_model",
         "//third_party/audition/models/baumgarte:baumgarte_model",
         "//third_party/audition/models/bruce_carney:bruce2018_hair_cell_synapse_model",
@@ -304,7 +304,7 @@ cc_test(
         ":stimulus_config_cc_proto",
         ":waveform_cc_proto",
         ":waveform_utils",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "//third_party/audition/models/baumgarte:baumgarte_model",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
@@ -346,7 +346,7 @@ cc_library(
         ":auditory_model_config_cc_proto",
         ":carfac_config_cc_proto",
         ":stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_gitlab_eigen//:eigen",
         "@com_google_carfac//:carfac",
     ],
@@ -359,7 +359,7 @@ cc_test(
         ":carfac_config_cc_proto",
         ":carfac_model",
         ":stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -389,7 +389,7 @@ cc_test(
     srcs = ["zilany2014_ihc_model_test.cc"],
     deps = [
         ":stimulus_config_cc_proto",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "//third_party/audition/models/bruce_carney:zilany2014_ihc_model",
         "@com_google_googletest//:gtest_main",
     ],
@@ -504,7 +504,7 @@ cc_library(
         ":waveform_cc_proto",
         ":waveform_utils",
         ":windowing",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
     ],
 )
 
@@ -534,7 +534,7 @@ cc_binary(
         ":auditory_response",
         ":waveform_cc_proto",
         ":waveform_utils",
-        "//eidos/stubs:logging",
+        "//eidos/port:logging",
         "//eidos/utils:proto_utils",
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
@@ -553,7 +553,7 @@ cc_library(
         ":auditory_model_config_cc_proto",
         ":auditory_response",
         ":waveform_cc_proto",
-        "//eidos/stubs:status-matchers",
+        "//eidos/port:status-matchers",
         "//eidos/utils:proto_utils",
         "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/flags:flag",

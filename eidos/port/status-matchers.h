@@ -1,5 +1,5 @@
-#ifndef EIDOS_STUBS_STATUS_MATCHERS_H_
-#define EIDOS_STUBS_STATUS_MATCHERS_H_
+#ifndef EIDOS_PORT_STATUS_MATCHERS_H_
+#define EIDOS_PORT_STATUS_MATCHERS_H_
 
 #include <ostream>
 #include <string>
@@ -11,7 +11,7 @@
 #include "gmock/gmock-matchers.h"
 #include "gtest/gtest-matchers.h"
 #include "gtest/gtest.h"
-#include "eidos/stubs/status_macros.h"
+#include "eidos/port/status_macros.h"
 
 namespace testing {
 namespace status {
@@ -260,4 +260,4 @@ inline internal_status::IsOkMatcher IsOk() {
 }  // namespace status
 }  // namespace testing
 
-#endif  // EIDOS_STUBS_STATUS_MATCHERS_H_
+#endif  // EIDOS_PORT_STATUS_MATCHERS_H_

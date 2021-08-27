@@ -16,7 +16,7 @@
 
 #include <vector>
 
-#include "eidos/stubs/logging.h"
+#include "eidos/port/logging.h"
 #include "resample.h"  // @com_github_resample
 
 namespace eidos {
