@@ -15,6 +15,8 @@
 // Sanity check for waveform utilities.
 
 #include <algorithm>
+#include <filesystem>
+#include <cstdio>
 #include <cmath>
 #include <numeric>
 #include <string>
@@ -22,7 +24,6 @@
 
 #include "absl/strings/str_cat.h"
 #include "eidos/audition/waveform_utils.h"
-#include "eidos/utils/test_utils.h"
 #include "google/protobuf/util/message_differencer.h"
 #include "gtest/gtest.h"
 
@@ -50,13 +51,13 @@ TEST(WaveformUtilsTest, Reading) {
 TEST(WaveformUtilsTest, ReadingAndWriting) {
   Waveform wave;
   ASSERT_TRUE(ReadWaveform(kWaveFilePath, &wave));
-  const auto temp_path_info = utils::TempPath();
-  const std::string &temp_path = temp_path_info.second;
+  const std::string &temp_path = std::tmpnam(nullptr);
   ASSERT_TRUE(WriteWaveform(wave, temp_path));
 
   Waveform new_wave;
   ASSERT_TRUE(ReadWaveform(temp_path, &new_wave));
   EXPECT_TRUE(MessageDifferencer::Equals(new_wave, wave));
+  EXPECT_TRUE(std::filesystem::remove(temp_path));
 }
 
 TEST(WaveformUtilsTest, UnitScaling) {

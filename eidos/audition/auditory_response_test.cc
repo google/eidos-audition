@@ -16,12 +16,13 @@
 
 #include "eidos/audition/auditory_response.h"
 
+#include <filesystem>
+#include <cstdio>
 #include <string>
 
 #include "Eigen/Core"
 #include "absl/strings/str_cat.h"
 #include "eidos/audition/auditory_model_config.pb.h"
-#include "eidos/utils/test_utils.h"
 #include "gtest/gtest.h"
 
 namespace eidos {
@@ -35,7 +36,9 @@ TEST(AuditoryResponseTest, CheckWriteNpy) {
   response.mutable_outputs()->emplace_back(
       OUTPUT_SYNAPSE_SPIKE_TIMES,
       Eigen::ArrayXXd::Random(kNumChannels, kNumSamples));
-  response.WriteNpy(utils::TempPath().second);
+  const std::string temp_path = std::tmpnam(nullptr);
+  response.WriteNpy(temp_path);
+  EXPECT_TRUE(std::filesystem::remove(temp_path));
 }
 
 TEST(AuditoryResponseTest, CheckWriteNpz) {
@@ -52,7 +55,9 @@ TEST(AuditoryResponseTest, CheckWriteNpz) {
       OUTPUT_SYNAPSE_SPIKE_TIMES, data);
   response.mutable_channel_properties()->center_frequencies.
       emplace_back(0.0);
-  response.WriteNpz(utils::TempPath().second);
+  const std::string temp_path = std::tmpnam(nullptr);
+  response.WriteNpz(temp_path);
+  EXPECT_TRUE(std::filesystem::remove(temp_path));
 }
 
 }  // namespace audition

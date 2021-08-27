@@ -48,7 +48,6 @@ cc_test(
     deps = [
         ":waveform_cc_proto",
         ":waveform_utils",
-        "//eidos/utils:test_utils",
         "@com_google_googletest//:gtest_main",
         "@com_google_protobuf//:protobuf",
     ],
@@ -193,7 +192,6 @@ cc_test(
     srcs = ["auditory_response_test.cc"],
     deps = [
         ":auditory_response",
-        "//eidos/utils:test_utils",
         "@com_gitlab_eigen//:eigen",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
