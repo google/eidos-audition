@@ -26,17 +26,17 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "net_zlib",
     build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
-    sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
-    strip_prefix = "zlib-1.2.11",
-    urls = ["https://zlib.net/zlib-1.2.11.tar.gz"],
+    sha256 = "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
+    strip_prefix = "zlib-1.2.13",
+    urls = ["https://zlib.net/zlib-1.2.13.tar.gz"],
 )
 
 # -------------------------------------------------------------------------
 # Google protocol buffers. See
 #    https://github.com/protocolbuffers/protobuf
 # -------------------------------------------------------------------------
-protobuf_version = "3.17.3"
-protobuf_sha256 = "c6003e1d2e7fefa78a3039f19f383b4f3a61e81be8c19356f85b6461998ad3db"
+protobuf_version = "3.21.9"
+protobuf_sha256 = "1add10f9bd92775b91f326da259f243881e904dd509367d5031d4c782ba82810"
 
 http_archive(
     name = "com_google_protobuf",
