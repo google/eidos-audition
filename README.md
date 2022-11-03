@@ -31,7 +31,7 @@ If you use the code in your research, please cite the following
   month   = may,
   address = {Marseille, France},
   publisher = {European Language Resources Association (ELRA)},
-  url = {https://lrec2020.lrec-conf.org/media/proceedings/Workshops/Books/SLTUCCURLbook.pdf},
+  url = {https://aclanthology.org/2020.sltu-1.2/},
 }
 ```
 
