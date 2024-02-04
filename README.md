@@ -1,7 +1,7 @@
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/google/eidos-audition/blob/master/LICENSE)
 [![Paper](https://img.shields.io/badge/paper-SLTU%202020-blue.svg)](https://www.aclweb.org/anthology/2020.sltu-1.2/)
-[![Build Tests (Linux)](https://github.com/google/eidos-audition/workflows/linux-ci.yml/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22linux%22)
-[![Build Tests (macOS)](https://github.com/google/eidos-audition/workflows/macos-ci.yml/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22macos%22)
+[![Build Tests (Linux)](https://github.com/google/eidos-audition/workflows/linux/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22linux%22)
+[![Build Tests (macOS)](https://github.com/google/eidos-audition/workflows/macos/badge.svg)](https://github.com/google/eidos-audition/actions?query=workflow%3A%22macos%22)
 
 ## About
 
