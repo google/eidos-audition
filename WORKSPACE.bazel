@@ -28,8 +28,23 @@ http_archive(
     build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
     sha256 = "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
     strip_prefix = "zlib-1.2.13",
-    urls = ["https://zlib.net/zlib-1.2.13.tar.gz"],
+    urls = ["https://zlib.net/fossils/zlib-1.2.13.tar.gz"],
 )
+
+# -------------------------------------------------------------------------
+# Python extra Bazel rules for packaging: See
+#    https://github.com/bazelbuild/rules_python/tree/master
+# -------------------------------------------------------------------------
+
+http_archive(
+    name = "rules_python",
+    strip_prefix = "rules_python-0.25.0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.25.0/rules_python-0.25.0.tar.gz",
+    sha256 = "5868e73107a8e85d8f323806e60cad7283f34b32163ea6ff1020cf27abef6036",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories")
+py_repositories()
 
 # -------------------------------------------------------------------------
 # Google protocol buffers. See
